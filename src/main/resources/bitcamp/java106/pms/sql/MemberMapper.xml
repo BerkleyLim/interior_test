@@ -38,11 +38,12 @@
   </select>
   
   <select id="selectOneWithPassword" parameterType="map" resultMap="MemberMap">
-    select *
+    select memno, id, pwd
     from INTR_MEMBER 
-    where memno=#{no} and pwd=password(#{password})
+    where memno=#{no} id=#{id} and pwd=password(#{password})
   </select>
   
+  <!-- count SQL문 -->
   <select id="count" parameterType="map" resultType="int">
     select count(*) 
     from INTR_MEMBER 
@@ -51,8 +52,13 @@
   
   <update id="update" parameterType="Member">
     update INTR_MEMBER set 
-        name=#{name}, 
-        pwd=password(#{password}) 
+        pwd=#{password}, 
+        name=#{name},
+        nknm=#{nickName},
+        phno=#{phoneNumber},
+        zcode=#{zipCode},
+        baddr=#{baseAdd},
+        daddr=#{detailAdd}
     where memno=#{no}
   </update>
   
