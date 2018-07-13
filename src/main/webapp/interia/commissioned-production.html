@@ -93,8 +93,8 @@
                 <div class="form-group">
                     <div class="col-sm-10">
                         
-                        <label for="sp_zip_code" class="col-sm-2 control-label">우편번호 </label> 
-                        <input id="sp_zip_code" name="sp_zip_code" type="text" class="col-sm-2 control-label sp-input-height" readonly="true">
+                        <label for="sp-zip-code" class="col-sm-2 control-label">우편번호 </label> 
+                        <input id="sp-zip-code" name="sp-zip-code" type="text" class="col-sm-2 control-label sp-input-height" readonly="true">
                         &nbsp;&nbsp;&nbsp; 
                         <input type="button" onclick="execDaumPostCode()" class="btn sp-btn btn-sm sp-input-height" value="배송지찾기"><br>
                     </div>
@@ -103,7 +103,7 @@
                 <div class="form-group">
                     <div class="col-sm-10">
                         <label class="col-sm-2 control-label">주소 </label>  
-                        <input id="sp_add_ress" name="sp_add_ress" type="text" class="col-sm-8 sp-input-height" style="margin-bottom:1em" readonly="true"> <br>
+                        <input id="sp-add-ress" name="sp-add-ress" type="text" class="col-sm-8 sp-input-height" style="margin-bottom:1em" readonly="true"> <br>
                         <label class="col-sm-2 control-label"></label>
                         <input id="sp_detail_add_ress" name="sp_detail_add_ress" type="text" class="col-sm-8 sp-input-height" > <br>
                     </div>
@@ -126,6 +126,7 @@
                 </div>
             </div>
              
+            
             <!-- script 명령어 실행 -->
             <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
             <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
@@ -170,8 +171,8 @@
                             }
     
                             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                            document.getElementById('sp_zip_code').value = data.zonecode; //5자리 새우편번호 사용
-                            document.getElementById('sp_add_ress').value = fullAddr;
+                            document.getElementById('sp-zip-code').value = data.zonecode; //5자리 새우편번호 사용
+                            document.getElementById('sp-add-ress').value = fullAddr;
                             // document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
     
                             // document.getElementById('sp-detail-add-ress').focus();
@@ -209,6 +210,7 @@
                     element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
                 }
                 </script>
+            
             
             <!-- 여기는 주문자 정보 폼 -->
             <h5  class="sp-title sp-title-sub sp-margin-top">주문자 정보</h5>

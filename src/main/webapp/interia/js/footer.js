@@ -1,3 +1,3 @@
-    $.get("/interior/interia/html/footer.html", (data) => {
+    $.get("/interior_test/interia/html/footer.html", (data) => {
         $("#footer").html(data);
     });
