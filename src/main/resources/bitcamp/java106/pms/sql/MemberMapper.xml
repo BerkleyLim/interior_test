@@ -3,8 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- MemberDao.class 파일에서 불러온다! -->
 <mapper namespace="bitcamp.java106.pms.dao.MemberDao">
 
+<!-- 여기는 DB 컬럼을 Java에서 지정한 함수명을 저장하는 것 -->
+<!-- Member 클래스 -->
   <resultMap type="Member" id="MemberMap">
     <id column="memno" property="no"/>
     <result column="id" property="id"/>
@@ -17,6 +20,7 @@
     <result column="daadr" property="detailAdd"/>
   </resultMap>
   
+  <!--  -->
   <select id="selectList" 
           resultMap="MemberMap" parameterType="map">
     select *
@@ -25,6 +29,7 @@
     limit #{startRowNo}, #{pageSize}
   </select>
   
+  <!-- 회원가입 폼에서 작업을 하기 위한 문법 -->
   <insert id="insert" parameterType="Member">
     insert into INTR_MEMBER(id, pwd, name, nknm, phno) 
     values(#{id}, password(#{password}), 
