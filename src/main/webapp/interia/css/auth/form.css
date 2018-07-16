@@ -86,7 +86,7 @@ a:active, a:hover {text-decoration:none;}
 	border-bottom: 1px solid #ccc;
 	box-sizing: border-box;
 }
-.form_mainForm div > input[type="text"], input[type="password"], input[type="date"]{
+.form_mainForm div > input[type="text"], input[type="password"], input[type="date"], input[type="email"]{
 	float: left;
 	width:200px;
 	height:30px;
@@ -359,6 +359,17 @@ a:active, a:hover {text-decoration:none;}
 	margin-left: 1.5em;
 	margin-right: 1em;
 }
+/* .workshop_form_mainForm_Id01 input[type="email"]{
+    float: left;
+    width:200px;
+    height:30px;
+    padding: 0.625em;
+    margin: 1.125em 0;
+    border: solid 1px #ccc;
+    box-sizing: border-box;
+    margin-left: 1.5em;
+    margin-right: 1em;
+} */
 .workshop_form_mainForm_Id01_textarea textarea{
 	float: left;
 	width:200px;

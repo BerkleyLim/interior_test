@@ -34,8 +34,9 @@ public class MemberServiceImpl implements MemberService {
     }
     
     @Override
-    public boolean isExist(String id, String password) {
+    public boolean isExist(int no, String id, String password) {
         HashMap<String,Object> params = new HashMap<>();
+        params.put("no", no);
         params.put("id", id);
         params.put("password", password);
         

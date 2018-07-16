@@ -33,7 +33,7 @@
   <insert id="insert" parameterType="Member">
     insert into INTR_MEMBER(id, pwd, name, nknm, phno) 
     values(#{id}, password(#{password}), 
-           #{name}, #{nknm}, #{phno})
+           #{name}, #{nickname}, #{phoneNumber})
   </insert>
   
   <select id="selectOne" parameterType="String" resultMap="MemberMap">
@@ -48,11 +48,11 @@
     where memno=#{no} id=#{id} and pwd=password(#{password})
   </select>
   
-  <!-- count SQL문 -->
+  <!-- count : 아이디와 비밀번호가 일치성 검사 : 여기선  로그인 및 회원가입을 확인한다. -->
   <select id="count" parameterType="map" resultType="int">
     select count(*) 
     from INTR_MEMBER 
-    where memno=#{no} and pwd=password(#{password})
+    where memno=#{no} and id=#{id} and pwd=password(#{password})
   </select>
   
   <update id="update" parameterType="Member">
