@@ -17,7 +17,7 @@
     <result column="phno" property="phoneNumber"/>
     <result column="zcode" property="zipCode"/>
     <result column="baddr" property="baseAdd"/>
-    <result column="daadr" property="detailAdd"/>
+    <result column="daddr" property="detailAdd"/>
   </resultMap>
   
   <!--  -->
@@ -42,6 +42,7 @@
     where memno=#{no}
   </select>
   
+  <!-- 아이디와 비밀번호 둘다 일치하면 로그인! -->
   <select id="selectOneWithPassword" parameterType="map" resultMap="MemberMap">
     select memno, id, pwd
     from INTR_MEMBER 
