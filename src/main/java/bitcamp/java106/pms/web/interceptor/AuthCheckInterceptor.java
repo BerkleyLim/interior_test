@@ -17,8 +17,8 @@ public class AuthCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         Member loginUser = (Member) session.getAttribute("loginUser");
         
-        if (loginUser == null) { // 로그인을 하지 않았으면 로그인 폼으로 보낸다.
-            response.sendRedirect(request.getContextPath() + "");
+        if (loginUser == null) { // 로그인을 하지 않았으면 로그인 폼으로 보낸다. => spring 설정 파일 보고 참조
+            response.sendRedirect(request.getContextPath() + "app/auth/login");
             return false;
         }
         

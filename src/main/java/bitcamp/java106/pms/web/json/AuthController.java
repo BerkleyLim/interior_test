@@ -35,7 +35,6 @@ public class AuthController {
     public Object login(
             @RequestParam("id") String id,
             @RequestParam("password") String password,
-            @RequestParam("no") int no,
             @RequestParam(value="saveId",required=false) String saveId,
             HttpServletRequest request,
             HttpServletResponse response,
@@ -56,9 +55,8 @@ public class AuthController {
         
         HashMap<String, Object> result = new HashMap<>();
         
-        
-        if (memberService.isExist(no, id, password)) { // 로그인 성공!
-            session.setAttribute("loginUser", memberService.get(no));
+        if (memberService.isExist(id, password)) { // 로그인 성공!
+            session.setAttribute("loginUser", memberService.get(id));
             result.put("state", "success");
 
         } else { // 로그인 실패!
@@ -75,4 +73,3 @@ public class AuthController {
     }
 }
 
-//ver 55 - JSON 데이터를 출력하는 페이지 컨트롤러 생성
