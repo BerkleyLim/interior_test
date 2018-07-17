@@ -1,1 +1,1 @@
-var serverRoot = "http://localhost:8888/interior_test";
+var serverRoot = "http://localhost:8888/interior";
