@@ -51,6 +51,7 @@ public class MemberController {
     public Member view(@PathVariable String id) throws Exception {
         return memberService.get(id);
     }
+    
 }
 
 

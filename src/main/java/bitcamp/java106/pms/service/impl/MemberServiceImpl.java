@@ -12,7 +12,7 @@ import bitcamp.java106.pms.service.MemberService;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-    
+    // 해당 메소드의 대해 알고 싶으면 자세한건 인터페이스 참조
     MemberDao memberDao;
     
     public MemberServiceImpl(MemberDao memberDao) {
@@ -56,9 +56,9 @@ public class MemberServiceImpl implements MemberService {
     public int delete(int no) {
         return memberDao.delete(no);
     }
+    
 }
 
-//ver 53 - 클래스 추가
 
 
 
