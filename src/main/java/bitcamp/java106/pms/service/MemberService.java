@@ -14,6 +14,7 @@ public interface MemberService {
     int add(Member member); // 회원가입용 메소드
     int update(Member member); // 마이페이지에서 회원 정보 수정용 메소드
     int delete(int no); // 회원 탈퇴용 메소드
+    String searchId(String name, String phoneNumber); // 아이디 찾기를 위한 조건이 달린 메서드
 }
 
 

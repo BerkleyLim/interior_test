@@ -57,6 +57,15 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.delete(no);
     }
     
+    @Override
+    public String searchId(String name, String phoneNumber) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("name", name);
+        params.put("phoneNumber", phoneNumber);
+        
+        return memberDao.selectSearchOne(params);
+    }
+    
 }
 
 
