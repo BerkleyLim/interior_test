@@ -3,19 +3,81 @@
 <head>
   <meta charset="utf-8">
   <title>val demo</title>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <style>
+    #blogMenu ul ul {
+        display:none;
+    }
+    
+    #blogMenu ul li:hover ul {
+        display: block;
+    }
+    
+    #blogMenu ul ul {
+		display:none;
+		position:absolute;
+		
+		background-color:#5c5c5c;
+		
+	}
+	
+	#nav_menu ul ul li {
+	
+	   float:none;
+	
+	}
+    
+    #listBar {
+        display:none;
+    }
+    
+    #listBar ul li:hover {
+        display:block;
+    }
+    
+    #listBar {
+        display:none;
+        position:absolute;
+        
+        background-color:#5c5c5c;
+    }
+    
+  </style>
 </head>
 <body>
+<div id="blogMenu">
+<ul>
+<li><a href="#">Menu 1</a></li>
+<li><a href="#">Menu 2</a>
+<ul>
+<li><a href="#">Sub Menu 1</a></li>
+<li><a href="#">Sub Menu 2</a></li>
+<li><a href="#">Sub Menu 3</a></li>
+</ul>
+
  
-<p>Type something and then click or tab out of the input.</p>
-<input type="text" value="type something">
- 
-<script>
-$( "input" ).on( "blur", function() {
-  $( this ).val(function( i, val ) {
-    return val.toUpperCase();
-  });
-});
+
+</li>
+
+</ul>
+</div>
+
+<a id="nav-link-5" href="">username(마이페이지)</a>
+
+<div id="listBar">
+<ul>
+<li>username(마이페이지)</a></li>
+<li>--------------------------</li>
+<li><a href="#" style="">username(마이페이지)</a></li>
+<li><a href="#" style="">username(마이페이지)</a></li>
+<li>--------------------------</li>
+<li><a href="#" style="">username(마이페이지)</a></li>
+<li><a href="#" style="">username(마이페이지)</a></li>
+<li>--------------------------</li>
+<li><a href="#" style="">username(마이페이지)</a></li>
+<li><a href="#" style="">username(마이페이지)</a></li>
+</ul>
+</div>
+
 </script>
  
 </body>

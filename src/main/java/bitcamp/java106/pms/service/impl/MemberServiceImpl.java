@@ -72,8 +72,12 @@ public class MemberServiceImpl implements MemberService {
     }
     
     @Override
-    public Member changePassword(String id) {
-        return memberDao.updatePassword(id);
+    public int changePassword(String id, String password) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("password", password);
+        
+        return memberDao.updatePassword(params);
     }
     
 }

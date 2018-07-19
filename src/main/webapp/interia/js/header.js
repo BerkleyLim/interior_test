@@ -53,4 +53,17 @@ function loadLoginUser() {
 	});*/ 
 }
 
+function myPage() {
+	document.write("<script id='tr-template' type='text/x-handlebars-template'>");
+	document.write("{{#each list}}");
+	document.write("<tr>");
+	document.write("<td>{{no}}</td>");
+	document.write("<td><a href='form.html?no={{no}}'>{{title}}</a></td>");
+	document.write("<td>{{createdDate}}</td>");
+	document.write("</tr>");
+	document.write("{{/each}}");
+	document.write("</script>");
+}
+
+
 

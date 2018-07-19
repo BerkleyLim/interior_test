@@ -59,7 +59,7 @@
   
   <update id="update" parameterType="Member">
     update INTR_MEMBER set 
-        pwd=#{password}, 
+        pwd=password(#{password}), 
         name=#{name},
         nknm=#{nickname},
         phno=#{phoneNumber},
@@ -89,9 +89,9 @@
   </select>
   
   <!-- 비밀번호 변경 관련 문법 -->
-  <update id="updatePassword" parameterType="String">
+  <update id="updatePassword" parameterType="map">
     update INTR_MEMBER set 
-        pwd=#{password}, 
+        pwd=password(#{password})
     where id=#{id}
   </update>
   

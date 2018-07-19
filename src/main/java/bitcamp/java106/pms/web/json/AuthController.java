@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import bitcamp.java106.pms.domain.Member;
@@ -119,6 +120,14 @@ public class AuthController {
         return result;
     }
     
+    @RequestMapping("/searchPasswordChange")
+    @ResponseStatus(HttpStatus.OK)
+    public void changePassword(
+            @RequestParam("id") String id,
+            @RequestParam("password") String password) {
+        
+        memberService.changePassword(id, password);
+    }
     
 }
 
