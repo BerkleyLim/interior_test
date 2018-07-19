@@ -66,6 +66,16 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.selectSearchOne(params);
     }
     
+    @Override
+    public boolean isSearchPassword(String id) {
+        return memberDao.selectSearchPassword(id) > 0 ? true : false;
+    }
+    
+    @Override
+    public Member changePassword(String id) {
+        return memberDao.updatePassword(id);
+    }
+    
 }
 
 

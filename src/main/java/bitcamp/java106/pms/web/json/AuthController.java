@@ -108,5 +108,17 @@ public class AuthController {
         session.invalidate(); // 여기는 세션 종료 시킨다 (찾은 아이디의 대해 세션이 남으면 안되기 때문에)
         return searchId;
     }
+    
+    @RequestMapping("/searchPassword")
+    public String searchPassword(
+            @RequestParam("id") String id) {
+        String result = null;
+        if (memberService.isSearchPassword(id)) {
+            result = "success";
+        }
+        return result;
+    }
+    
+    
 }
 

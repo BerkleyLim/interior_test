@@ -81,6 +81,20 @@
     where name=#{name} and phno=#{phoneNumber}
   </select>
   
+  <!-- 비밀번호 찾기 (service에서 boolean용으로 쓰이기) -->
+  <select id="selectSearchPassword" parameterType="String" resultType="int">
+    select count(*)
+    from INTR_MEMBER 
+    where id=#{id} 
+  </select>
+  
+  <!-- 비밀번호 변경 관련 문법 -->
+  <update id="updatePassword" parameterType="String">
+    update INTR_MEMBER set 
+        pwd=#{password}, 
+    where id=#{id}
+  </update>
+  
 </mapper>
 
 

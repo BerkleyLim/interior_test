@@ -1,0 +1,5 @@
+$("#btnChangePwd").click(() => {
+	var data = {
+		
+	}
+})
