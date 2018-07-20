@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>val demo</title>
+  <style>
+
+    .dropdown {
+        position: relative;
+        display: none;
+    }
+
+    .dropdown-content {
+        text-align: center;
+        margin-top:10px;
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        font-size:14px;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    .header_hr_style_mypage {
+        border: 0.5px;
+        background: #333;
+        border-style: solid;
+        border-color:#333;
+    }
+  </style>
+</head>
+<body>
+    <div class="header_nav1">
+        <a id="nav-link-1" href="/interior_test/interia/html/auth/login.html">로그인</a>
+        <a id="nav-link-2" href="/interior_test/interia/html/auth/form.html">회원가입</a>
+        <a id="nav-link-3" href="#"></a>
+        <a id="nav-link-4" href="#"></a>
+        <!-- 여기는 로그인 상태에서만 보이도록 한다. -->
+        <span class="dropdown" style="display:inline-block">
+            <a id="nav-link-5" href="">username(마이페이지)</a>
+    
+            <!-- 여기는 드롭다운용 코드 -->
+            <span class="dropdown-content">
+                <b id="mypage">username(마이페이지)</b>
+                <hr class="header_hr_style_mypage">
+                <p><a href="#">글쓰기</a></p>
+                <p><a href="#">주문제작 글쓰기</a></p>
+                <hr class="header_hr_style_mypage">
+                <p><a href="#">주문제작상태</a></p>
+                <p><a href="#">공방신청or관리자</a></p>
+                <hr class="header_hr_style_mypage">
+                <p><a href="#">설정 및 개인정보</a></p>
+                <p><a href="#">로그아웃</a></p>
+            </span>
+            <!-- 드롭다운용 코드 끝 -->
+        </span>
+    </div>
+
+
+</body>
+</html>

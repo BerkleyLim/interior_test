@@ -4,81 +4,51 @@
   <meta charset="utf-8">
   <title>val demo</title>
   <style>
-    #blogMenu ul ul {
-        display:none;
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
     }
-    
-    #blogMenu ul li:hover ul {
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+    }
+
+    .dropdown:hover .dropdown-content {
         display: block;
-    }
-    
-    #blogMenu ul ul {
-		display:none;
-		position:absolute;
-		
-		background-color:#5c5c5c;
-		
-	}
-	
-	#nav_menu ul ul li {
-	
-	   float:none;
-	
-	}
-    
-    #listBar {
-        display:none;
-    }
-    
-    #listBar ul li:hover {
-        display:block;
-    }
-    
-    #listBar {
-        display:none;
-        position:absolute;
-        
-        background-color:#5c5c5c;
     }
     
   </style>
 </head>
 <body>
-<div id="blogMenu">
-<ul>
-<li><a href="#">Menu 1</a></li>
-<li><a href="#">Menu 2</a>
-<ul>
-<li><a href="#">Sub Menu 1</a></li>
-<li><a href="#">Sub Menu 2</a></li>
-<li><a href="#">Sub Menu 3</a></li>
-</ul>
+<div class="header_nav1">
+    <a id="nav-link-1" href="/interior_test/interia/html/auth/login.html">로그인</a>
+    <a id="nav-link-2" href="/interior_test/interia/html/auth/form.html">회원가입</a>
+    <span class="dropdown">
+        <a id="nav-link-5" href="">username(마이페이지)</a>
 
- 
-
-</li>
-
-</ul>
+        <!-- 여기는 드롭다운용 코드 -->
+        <span class="dropdown-content">
+            <p>username(마이페이지)</p>
+            <hr>
+            <p><a href="#">username(마이페이지)</a></p>
+            <p><a href="#">username(마이페이지)</a></p>
+            <hr>
+            <p><a href="#">username(마이페이지)</a></p>
+            <p><a href="#">username(마이페이지)</a></p>
+            <hr>
+            <p><a href="#">username(마이페이지)</a></p>
+            <p><a href="#">username(마이페이지)</a></p>
+        </span>
+        <!-- 드롭다운용 코드 끝 -->
+    </span>
 </div>
 
-<a id="nav-link-5" href="">username(마이페이지)</a>
 
-<div id="listBar">
-<ul>
-<li>username(마이페이지)</a></li>
-<li>--------------------------</li>
-<li><a href="#" style="">username(마이페이지)</a></li>
-<li><a href="#" style="">username(마이페이지)</a></li>
-<li>--------------------------</li>
-<li><a href="#" style="">username(마이페이지)</a></li>
-<li><a href="#" style="">username(마이페이지)</a></li>
-<li>--------------------------</li>
-<li><a href="#" style="">username(마이페이지)</a></li>
-<li><a href="#" style="">username(마이페이지)</a></li>
-</ul>
-</div>
-
-</script>
- 
 </body>
 </html>

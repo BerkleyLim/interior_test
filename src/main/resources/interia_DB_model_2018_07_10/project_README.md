@@ -112,6 +112,7 @@
 
 - PK(FK) _ 회원번호 - Member Number (MENNO)
 - PK(FK) _ 공방체험번호 - Workshop Activity Number (WSANO)
+- 인원 - Activity Participants(ACPT)
 - 등록일자 - Activity Registration Date (ACRDT)
 
 
@@ -123,7 +124,8 @@
 - 최소인원 - Minimun number (MINNO)
 - 최대인원 - Maximun numbber (MAXNO)
 - 체험일자 - Activity Date (ACTDT)
-- 소요시간 - Estimated Time(ESMT)
+- 시작시간 - Activity Start Time (AVST)
+- 종료시간 - Activity End Time (AVET)
 - 준비물유무 - Materials CASE (MTCSE)
 - 준비물내용 - Materials (MTRLS)
 - 체험료 - Activity Price (APRIC)
