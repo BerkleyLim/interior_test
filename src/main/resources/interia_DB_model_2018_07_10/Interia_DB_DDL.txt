@@ -1,998 +1,998 @@
--- ȸ��
+-- 회원
 DROP TABLE IF EXISTS INTR_MEMBER RESTRICT;
 
--- �Խù�
+-- 게시물
 DROP TABLE IF EXISTS INTR_BOARD RESTRICT;
 
--- ����(�ȷο� �ȷ���)
+-- 관계(팔로워 팔로잉)
 DROP TABLE IF EXISTS INTR_RLTSP RESTRICT;
 
--- ���
+-- 댓글
 DROP TABLE IF EXISTS INTR_BCMMT RESTRICT;
 
--- ��ǰ
+-- 작품
 DROP TABLE IF EXISTS INTR_WORKS RESTRICT;
 
--- �ֹ�
+-- 주문
 DROP TABLE IF EXISTS INTR_ORDER RESTRICT;
 
--- �ֹ�/��ǰ
+-- 주문/작품
 DROP TABLE IF EXISTS INTR_ODNWK RESTRICT;
 
--- ����
+-- 공방
 DROP TABLE IF EXISTS INTR_WRKSHP RESTRICT;
 
--- ����-����ü��
+-- 공방-공방체험
 DROP TABLE IF EXISTS INTR_WSAV RESTRICT;
 
--- ����ü����
+-- 공방체험등록
 DROP TABLE IF EXISTS INTR_ACRGTT RESTRICT;
 
--- ����ü�����
+-- 공방체험사진
 DROP TABLE IF EXISTS INTR_WKACP RESTRICT;
 
--- �������
+-- 공방사진
 DROP TABLE IF EXISTS INTR_WSPHO RESTRICT;
 
--- ��ǰ�ɼ�
+-- 작품옵션
 DROP TABLE IF EXISTS INTR_WKOT RESTRICT;
 
--- ��ǰ����
+-- 작품사진
 DROP TABLE IF EXISTS INTR_WPHO RESTRICT;
 
--- ����
+-- 문의
 DROP TABLE IF EXISTS INTR_QNA RESTRICT;
 
--- ���ƿ�
+-- 좋아요
 DROP TABLE IF EXISTS INTR_LKMB RESTRICT;
 
--- �������
+-- 리뷰사진
 DROP TABLE IF EXISTS INTR_RVPHO RESTRICT;
 
--- ��ũ��(����)
+-- 스크랩(공방)
 DROP TABLE IF EXISTS INTR_SPSTUD RESTRICT;
 
--- ��ũ��(�Ǹ���ǰ)
+-- 스크랩(판매작품)
 DROP TABLE IF EXISTS INTR_SPSW RESTRICT;
 
--- �ؽ��±�
+-- 해시태그
 DROP TABLE IF EXISTS INTR_HASHTAG RESTRICT;
 
--- ��ǰ�±׸�Ī
+-- 작품태그매칭
 DROP TABLE IF EXISTS INTR_WTMACH RESTRICT;
 
--- �Խù��±׸�Ī
+-- 게시물태그매칭
 DROP TABLE IF EXISTS INTR_BTMACH RESTRICT;
 
--- �����±׸�Ī
+-- 공방태그매칭
 DROP TABLE IF EXISTS INTR_STMACH RESTRICT;
 
--- ��ٱ���
+-- 장바구니
 DROP TABLE IF EXISTS INTR_SPBK RESTRICT;
 
--- �޽���
+-- 메시지
 DROP TABLE IF EXISTS INTR_MESSAGE RESTRICT;
 
--- ȸ��
+-- 회원
 CREATE TABLE INTR_MEMBER (
-	MEMNO INTEGER      NOT NULL COMMENT 'ȸ����ȣ', -- ȸ����ȣ
-	ID    VARCHAR(40)  NOT NULL COMMENT '���̵�(�̸���)', -- ���̵�(�̸���)
-	PWD   VARCHAR(150) NOT NULL COMMENT '��й�ȣ', -- ��й�ȣ
-	NAME  VARCHAR(50)  NOT NULL COMMENT '�̸�', -- �̸�
-	NKNM  VARCHAR(50)  NOT NULL COMMENT '�г���', -- �г���
-	PHNO  VARCHAR(30)  NOT NULL COMMENT '��ȭ��ȣ', -- ��ȭ��ȣ
-	ZCODE CHAR(5)      NULL     COMMENT '������ȣ', -- ������ȣ
-	BADDR VARCHAR(100) NULL     COMMENT '�⺻�ּ�', -- �⺻�ּ�
-	DADDR VARCHAR(100) NULL     COMMENT '���ּ�' -- ���ּ�
+    MEMNO INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+    ID    VARCHAR(40)  NOT NULL COMMENT '아이디(이메일)', -- 아이디(이메일)
+    PWD   VARCHAR(150) NOT NULL COMMENT '비밀번호', -- 비밀번호
+    NAME  VARCHAR(50)  NOT NULL COMMENT '이름', -- 이름
+    NKNM  VARCHAR(50)  NOT NULL COMMENT '닉네임', -- 닉네임
+    PHNO  VARCHAR(30)  NOT NULL COMMENT '전화번호', -- 전화번호
+    ZCODE CHAR(5)      NULL     COMMENT '우편번호', -- 우편번호
+    BADDR VARCHAR(100) NULL     COMMENT '기본주소', -- 기본주소
+    DADDR VARCHAR(100) NULL     COMMENT '상세주소' -- 상세주소
 )
-COMMENT 'ȸ��';
+COMMENT '회원';
 
--- ȸ��
+-- 회원
 ALTER TABLE INTR_MEMBER
-	ADD CONSTRAINT PK_INTR_MEMBER -- ȸ�� �⺻Ű
-		PRIMARY KEY (
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT PK_INTR_MEMBER -- 회원 기본키
+        PRIMARY KEY (
+            MEMNO -- 회원번호
+        );
 
--- ȸ�� ����ũ �ε���
+-- 회원 유니크 인덱스
 CREATE UNIQUE INDEX UIX_INTR_MEMBER
-	ON INTR_MEMBER ( -- ȸ��
-		ID ASC -- ���̵�(�̸���)
-	);
+    ON INTR_MEMBER ( -- 회원
+        ID ASC -- 아이디(이메일)
+    );
 
--- ȸ�� �ε���
+-- 회원 인덱스
 CREATE INDEX IX_INTR_MEMBER
-	ON INTR_MEMBER( -- ȸ��
-		NKNM ASC -- �г���
-	);
+    ON INTR_MEMBER( -- 회원
+        NKNM ASC -- 닉네임
+    );
 
 ALTER TABLE INTR_MEMBER
-	MODIFY COLUMN MEMNO INTEGER NOT NULL AUTO_INCREMENT COMMENT 'ȸ����ȣ';
+    MODIFY COLUMN MEMNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '회원번호';
 
--- �Խù�
+-- 게시물
 CREATE TABLE INTR_BOARD (
-	BNO   INTEGER      NOT NULL COMMENT '�Խù���ȣ', -- �Խù���ȣ
-	MEMNO INTEGER      NOT NULL COMMENT 'ȸ����ȣ', -- ȸ����ȣ
-	BRTDT DATE         NOT NULL COMMENT '�ۼ�����', -- �ۼ�����
-	BOCTT TEXT         NOT NULL COMMENT '�Խù� ����', -- �Խù� ����
-	PATH  VARCHAR(255) NULL     COMMENT '����' -- ����
+    BNO   INTEGER      NOT NULL COMMENT '게시물번호', -- 게시물번호
+    MEMNO INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+    BRTDT DATE         NOT NULL COMMENT '작성일자', -- 작성일자
+    BOCTT TEXT         NOT NULL COMMENT '게시물 내용', -- 게시물 내용
+    PATH  VARCHAR(255) NULL     COMMENT '사진' -- 사진
 )
-COMMENT '�Խù�';
+COMMENT '게시물';
 
--- �Խù�
+-- 게시물
 ALTER TABLE INTR_BOARD
-	ADD CONSTRAINT PK_INTR_BOARD -- �Խù� �⺻Ű
-		PRIMARY KEY (
-			BNO -- �Խù���ȣ
-		);
+    ADD CONSTRAINT PK_INTR_BOARD -- 게시물 기본키
+        PRIMARY KEY (
+            BNO -- 게시물번호
+        );
 
 ALTER TABLE INTR_BOARD
-	MODIFY COLUMN BNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '�Խù���ȣ';
+    MODIFY COLUMN BNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '게시물번호';
 
--- ����(�ȷο� �ȷ���)
+-- 관계(팔로워 팔로잉)
 CREATE TABLE INTR_RLTSP (
-	MEMNO  INTEGER NOT NULL COMMENT 'ȸ����ȣ', -- ȸ����ȣ
-	MEMNO2 INTEGER NOT NULL COMMENT 'ȸ����ȣ2' -- ȸ����ȣ2
+    MEMNO  INTEGER NOT NULL COMMENT '회원번호', -- 회원번호
+    MEMNO2 INTEGER NOT NULL COMMENT '회원번호2' -- 회원번호2
 )
-COMMENT '����(�ȷο� �ȷ���)';
+COMMENT '관계(팔로워 팔로잉)';
 
--- ����(�ȷο� �ȷ���)
+-- 관계(팔로워 팔로잉)
 ALTER TABLE INTR_RLTSP
-	ADD CONSTRAINT PK_INTR_RLTSP -- ����(�ȷο� �ȷ���) �⺻Ű
-		PRIMARY KEY (
-			MEMNO,  -- ȸ����ȣ
-			MEMNO2  -- ȸ����ȣ2
-		);
+    ADD CONSTRAINT PK_INTR_RLTSP -- 관계(팔로워 팔로잉) 기본키
+        PRIMARY KEY (
+            MEMNO,  -- 회원번호
+            MEMNO2  -- 회원번호2
+        );
 
--- ���
+-- 댓글
 CREATE TABLE INTR_BCMMT (
-	CNO   INTEGER      NOT NULL COMMENT '��۹�ȣ', -- ��۹�ȣ
-	BNO   INTEGER      NOT NULL COMMENT '�Խù���ȣ', -- �Խù���ȣ
-	CMCTT DATE         NULL     COMMENT '��۰Խ�����', -- ��۰Խ�����
-	CRTDT VARCHAR(255) NULL     COMMENT '��۳���', -- ��۳���
-	MEMNO INTEGER      NOT NULL COMMENT 'ȸ����ȣ' -- ȸ����ȣ
+    CNO   INTEGER      NOT NULL COMMENT '댓글번호', -- 댓글번호
+    BNO   INTEGER      NOT NULL COMMENT '게시물번호', -- 게시물번호
+    CMCTT DATE         NULL     COMMENT '댓글게시일자', -- 댓글게시일자
+    CRTDT VARCHAR(255) NULL     COMMENT '댓글내용', -- 댓글내용
+    MEMNO INTEGER      NOT NULL COMMENT '회원번호' -- 회원번호
 )
-COMMENT '���';
+COMMENT '댓글';
 
--- ���
+-- 댓글
 ALTER TABLE INTR_BCMMT
-	ADD CONSTRAINT PK_INTR_BCMMT -- ��� �⺻Ű
-		PRIMARY KEY (
-			CNO -- ��۹�ȣ
-		);
+    ADD CONSTRAINT PK_INTR_BCMMT -- 댓글 기본키
+        PRIMARY KEY (
+            CNO -- 댓글번호
+        );
 
 ALTER TABLE INTR_BCMMT
-	MODIFY COLUMN CNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '��۹�ȣ';
+    MODIFY COLUMN CNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '댓글번호';
 
--- ��ǰ
+-- 작품
 CREATE TABLE INTR_WORKS (
-	WNO   INTEGER     NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	MEMNO INTEGER     NOT NULL COMMENT '�����ȣ', -- �����ȣ
-	WTITL VARCHAR(50) NOT NULL COMMENT '��ǰ��', -- ��ǰ��
-	PRICE INTEGER     NOT NULL COMMENT '�ǸŰ�', -- �ǸŰ�
-	WRTDT DATE        NOT NULL COMMENT '�����', -- �����
-	ALSTK INTEGER     NULL     COMMENT '�������', -- �������
-	SLST  VARCHAR(50) NOT NULL COMMENT '�ǸŻ���', -- �ǸŻ���
-	PDDT  TEXT        NOT NULL COMMENT '��ǰ��', -- ��ǰ��
-	SPCS  CHAR(1)     NOT NULL COMMENT '��ۺ񿩺�', -- ��ۺ񿩺�
-	PDRD  TEXT        NULL     COMMENT '�����Ƿڻ�' -- �����Ƿڻ�
+    WNO   INTEGER     NOT NULL COMMENT '작품번호', -- 작품번호
+    MEMNO INTEGER     NOT NULL COMMENT '공방번호', -- 공방번호
+    WTITL VARCHAR(50) NOT NULL COMMENT '작품명', -- 작품명
+    PRICE INTEGER     NOT NULL COMMENT '판매가', -- 판매가
+    WRTDT DATE        NOT NULL COMMENT '등록일', -- 등록일
+    ALSTK INTEGER     NULL     COMMENT '재고수량', -- 재고수량
+    SLST  VARCHAR(50) NOT NULL COMMENT '판매상태', -- 판매상태
+    PDDT  TEXT        NOT NULL COMMENT '제품상세', -- 제품상세
+    SPCS  CHAR(1)     NOT NULL COMMENT '배송비여부', -- 배송비여부
+    PDRD  TEXT        NULL     COMMENT '제작의뢰상세' -- 제작의뢰상세
 )
-COMMENT '��ǰ';
+COMMENT '작품';
 
--- ��ǰ
+-- 작품
 ALTER TABLE INTR_WORKS
-	ADD CONSTRAINT PK_INTR_WORKS -- ��ǰ �⺻Ű
-		PRIMARY KEY (
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WORKS -- 작품 기본키
+        PRIMARY KEY (
+            WNO -- 작품번호
+        );
 
--- ��ǰ �ε���
+-- 작품 인덱스
 CREATE INDEX IX_INTR_WORKS
-	ON INTR_WORKS( -- ��ǰ
-		WTITL ASC, -- ��ǰ��
-		SLST ASC,  -- �ǸŻ���
-		WRTDT ASC  -- �����
-	);
+    ON INTR_WORKS( -- 작품
+        WTITL ASC, -- 작품명
+        SLST ASC,  -- 판매상태
+        WRTDT ASC  -- 등록일
+    );
 
 ALTER TABLE INTR_WORKS
-	MODIFY COLUMN WNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '��ǰ��ȣ';
+    MODIFY COLUMN WNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '작품번호';
 
--- �ֹ�
+-- 주문
 CREATE TABLE INTR_ORDER (
-	ODNO   INTEGER      NOT NULL COMMENT '�ֹ���ȣ', -- �ֹ���ȣ
-	MEMNO  INTEGER      NOT NULL COMMENT 'ȸ����ȣ', -- ȸ����ȣ
-	MOPAY  VARCHAR(50)  NULL     COMMENT '��������', -- ��������
-	DCOST  INTEGER      NOT NULL COMMENT '��ۺ�', -- ��ۺ�
-	TAMNT  INTEGER      NOT NULL COMMENT '�ѱݾ�', -- �ѱݾ�
-	ODATE  DATE         NOT NULL COMMENT '�ֹ���', -- �ֹ���
-	ODSTT  VARCHAR(50)  NOT NULL COMMENT '�ֹ�����', -- �ֹ�����
-	DLMEMO VARCHAR(255) NULL     COMMENT '��۸޸�', -- ��۸޸�
-	CURIR  VARCHAR(50)  NULL     COMMENT '�ù��', -- �ù��
-	ZCODE  CHAR(5)      NULL     COMMENT '������ȣ', -- ������ȣ
-	BADDR  VARCHAR(100) NULL     COMMENT '�⺻�ּ�', -- �⺻�ּ�
-	DADDR  VARCHAR(100) NULL     COMMENT '���ּ�', -- ���ּ�
-	IVNO   INTEGER      NULL     COMMENT '�����ȣ', -- �����ȣ
-	CLDTE  DATE         NULL     COMMENT 'Ŭ���ӿ�û��', -- Ŭ���ӿ�û��
-	CRQST  VARCHAR(50)  NULL     COMMENT 'ȯ�ҹױ�ȯ��û', -- ȯ�ҹױ�ȯ��û
-	CNDTL  VARCHAR(255) NULL     COMMENT 'ȯ�ҹױ�ȯ����', -- ȯ�ҹױ�ȯ����
-	PRSTT  VARCHAR(50)  NULL     COMMENT 'ó������(��ȯ/ȯ��)', -- ó������(��ȯ/ȯ��)
-	PRDTL  VARCHAR(255) NULL     COMMENT 'ó������(��ȯ/ȯ��)' -- ó������(��ȯ/ȯ��)
+    ODNO   INTEGER      NOT NULL COMMENT '주문번호', -- 주문번호
+    MEMNO  INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+    MOPAY  VARCHAR(50)  NULL     COMMENT '결제수단', -- 결제수단
+    DCOST  INTEGER      NOT NULL COMMENT '배송비', -- 배송비
+    TAMNT  INTEGER      NOT NULL COMMENT '총금액', -- 총금액
+    ODATE  DATE         NOT NULL COMMENT '주문일', -- 주문일
+    ODSTT  VARCHAR(50)  NOT NULL COMMENT '주문상태', -- 주문상태
+    DLMEMO VARCHAR(255) NULL     COMMENT '배송메모', -- 배송메모
+    CURIR  VARCHAR(50)  NULL     COMMENT '택배사', -- 택배사
+    ZCODE  CHAR(5)      NULL     COMMENT '우편번호', -- 우편번호
+    BADDR  VARCHAR(100) NULL     COMMENT '기본주소', -- 기본주소
+    DADDR  VARCHAR(100) NULL     COMMENT '상세주소', -- 상세주소
+    IVNO   INTEGER      NULL     COMMENT '송장번호', -- 송장번호
+    CLDTE  DATE         NULL     COMMENT '클레임요청일', -- 클레임요청일
+    CRQST  VARCHAR(50)  NULL     COMMENT '환불및교환요청', -- 환불및교환요청
+    CNDTL  VARCHAR(255) NULL     COMMENT '환불및교환사유', -- 환불및교환사유
+    PRSTT  VARCHAR(50)  NULL     COMMENT '처리상태(교환/환불)', -- 처리상태(교환/환불)
+    PRDTL  VARCHAR(255) NULL     COMMENT '처리사유(교환/환불)' -- 처리사유(교환/환불)
 )
-COMMENT '�ֹ�';
+COMMENT '주문';
 
--- �ֹ�
+-- 주문
 ALTER TABLE INTR_ORDER
-	ADD CONSTRAINT PK_INTR_ORDER -- �ֹ� �⺻Ű
-		PRIMARY KEY (
-			ODNO -- �ֹ���ȣ
-		);
+    ADD CONSTRAINT PK_INTR_ORDER -- 주문 기본키
+        PRIMARY KEY (
+            ODNO -- 주문번호
+        );
 
--- �ֹ� �ε���
+-- 주문 인덱스
 CREATE INDEX IX_INTR_ORDER
-	ON INTR_ORDER( -- �ֹ�
-		ODSTT ASC, -- �ֹ�����
-		CLDTE ASC, -- Ŭ���ӿ�û��
-		PRSTT ASC, -- ó������(��ȯ/ȯ��)
-		CRQST ASC  -- ȯ�ҹױ�ȯ��û
-	);
+    ON INTR_ORDER( -- 주문
+        ODSTT ASC, -- 주문상태
+        CLDTE ASC, -- 클레임요청일
+        PRSTT ASC, -- 처리상태(교환/환불)
+        CRQST ASC  -- 환불및교환요청
+    );
 
--- �ֹ�/��ǰ
+-- 주문/작품
 CREATE TABLE INTR_ODNWK (
-	WONO  INTEGER NOT NULL COMMENT '��ǰ�ֹ���ȣ', -- ��ǰ�ֹ���ȣ
-	ODNO  INTEGER NOT NULL COMMENT '�ֹ���ȣ', -- �ֹ���ȣ
-	WNO   INTEGER NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	OSTOR INTEGER NULL     COMMENT '����', -- ����
-	QCTT  TEXT    NULL     COMMENT '�����ı�', -- �����ı�
-	PCHRV TEXT    NULL     COMMENT '�Ƿڳ���' -- �Ƿڳ���
+    WONO  INTEGER NOT NULL COMMENT '작품주문번호', -- 작품주문번호
+    ODNO  INTEGER NOT NULL COMMENT '주문번호', -- 주문번호
+    WNO   INTEGER NOT NULL COMMENT '작품번호', -- 작품번호
+    OSTOR INTEGER NULL     COMMENT '수량', -- 수량
+    QCTT  TEXT    NULL     COMMENT '구매후기', -- 구매후기
+    PCHRV TEXT    NULL     COMMENT '의뢰내용' -- 의뢰내용
 )
-COMMENT '�ֹ�/��ǰ';
+COMMENT '주문/작품';
 
--- �ֹ�/��ǰ
+-- 주문/작품
 ALTER TABLE INTR_ODNWK
-	ADD CONSTRAINT PK_INTR_ODNWK -- �ֹ�/��ǰ �⺻Ű
-		PRIMARY KEY (
-			WONO -- ��ǰ�ֹ���ȣ
-		);
+    ADD CONSTRAINT PK_INTR_ODNWK -- 주문/작품 기본키
+        PRIMARY KEY (
+            WONO -- 작품주문번호
+        );
 
--- �ֹ�/��ǰ �ε���
+-- 주문/작품 인덱스
 CREATE INDEX IX_INTR_ODNWK
-	ON INTR_ODNWK( -- �ֹ�/��ǰ
-		WONO ASC, -- ��ǰ�ֹ���ȣ
-		ODNO ASC, -- �ֹ���ȣ
-		WNO ASC   -- ��ǰ��ȣ
-	);
+    ON INTR_ODNWK( -- 주문/작품
+        WONO ASC, -- 작품주문번호
+        ODNO ASC, -- 주문번호
+        WNO ASC   -- 작품번호
+    );
 
 ALTER TABLE INTR_ODNWK
-	MODIFY COLUMN WONO INTEGER NOT NULL AUTO_INCREMENT COMMENT '��ǰ�ֹ���ȣ';
+    MODIFY COLUMN WONO INTEGER NOT NULL AUTO_INCREMENT COMMENT '작품주문번호';
 
--- ����
+-- 공방
 CREATE TABLE INTR_WRKSHP (
-	MEMNO INTEGER      NOT NULL COMMENT '�����ȣ', -- �����ȣ
-	BSNO  INTEGER      NOT NULL COMMENT '����ڹ�ȣ', -- ����ڹ�ȣ
-	MUTUA VARCHAR(50)  NOT NULL COMMENT '��ȣ', -- ��ȣ
-	RNAME VARCHAR(50)  NOT NULL COMMENT '��ǥ�ڸ�', -- ��ǥ�ڸ�
-	INDST VARCHAR(100) NOT NULL COMMENT '����', -- ����
-	ITEMS VARCHAR(100) NOT NULL COMMENT '����', -- ����
-	ZCODE CHAR(5)      NULL     COMMENT '�����ּ�', -- �����ּ�
-	BADDR VARCHAR(100) NULL     COMMENT '�⺻�ּ�', -- �⺻�ּ�
-	DADDR VARCHAR(100) NULL     COMMENT '���ּ�', -- ���ּ�
-	WSNM  VARCHAR(50)  NULL     COMMENT '�����', -- �����
-	ITROD VARCHAR(255) NULL     COMMENT '�Ұ���', -- �Ұ���
-	WSCTT TEXT         NULL     COMMENT '����Ұ� ����', -- ����Ұ� ����
-	FCBK  VARCHAR(255) NULL     COMMENT '���̽���', -- ���̽���
-	TWIT  VARCHAR(255) NULL     COMMENT 'Ʈ����', -- Ʈ����
-	ISTAG VARCHAR(255) NULL     COMMENT '�ν�Ÿ' -- �ν�Ÿ
+    MEMNO INTEGER      NOT NULL COMMENT '공방번호', -- 공방번호
+    BSNO  INTEGER      NOT NULL COMMENT '사업자번호', -- 사업자번호
+    MUTUA VARCHAR(50)  NOT NULL COMMENT '상호', -- 상호
+    RNAME VARCHAR(50)  NOT NULL COMMENT '대표자명', -- 대표자명
+    INDST VARCHAR(100) NOT NULL COMMENT '업태', -- 업태
+    ITEMS VARCHAR(100) NOT NULL COMMENT '종목', -- 종목
+    ZCODE CHAR(5)      NULL     COMMENT '우편주소', -- 우편주소
+    BADDR VARCHAR(100) NULL     COMMENT '기본주소', -- 기본주소
+    DADDR VARCHAR(100) NULL     COMMENT '상세주소', -- 상세주소
+    WSNM  VARCHAR(50)  NULL     COMMENT '공방명', -- 공방명
+    ITROD VARCHAR(255) NULL     COMMENT '소개글', -- 소개글
+    WSCTT TEXT         NULL     COMMENT '공방소개 내용', -- 공방소개 내용
+    FCBK  VARCHAR(255) NULL     COMMENT '페이스북', -- 페이스북
+    TWIT  VARCHAR(255) NULL     COMMENT '트위터', -- 트위터
+    ISTAG VARCHAR(255) NULL     COMMENT '인스타' -- 인스타
 )
-COMMENT '����';
+COMMENT '공방';
 
--- ����
+-- 공방
 ALTER TABLE INTR_WRKSHP
-	ADD CONSTRAINT PK_INTR_WRKSHP -- ���� �⺻Ű
-		PRIMARY KEY (
-			MEMNO -- �����ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WRKSHP -- 공방 기본키
+        PRIMARY KEY (
+            MEMNO -- 공방번호
+        );
 
--- ���� ����ũ �ε���
+-- 공방 유니크 인덱스
 CREATE UNIQUE INDEX UIX_INTR_WRKSHP
-	ON INTR_WRKSHP ( -- ����
-		BSNO ASC -- ����ڹ�ȣ
-	);
+    ON INTR_WRKSHP ( -- 공방
+        BSNO ASC -- 사업자번호
+    );
 
--- ���� �ε���
+-- 공방 인덱스
 CREATE INDEX IX_INTR_WRKSHP
-	ON INTR_WRKSHP( -- ����
-		WSNM ASC,  -- �����
-		MEMNO ASC  -- �����ȣ
-	);
+    ON INTR_WRKSHP( -- 공방
+        WSNM ASC,  -- 공방명
+        MEMNO ASC  -- 공방번호
+    );
 
 ALTER TABLE INTR_WRKSHP
-	MODIFY COLUMN MEMNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '�����ȣ';
+    MODIFY COLUMN MEMNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '공방번호';
 
--- ����-����ü��
+-- 공방-공방체험
 CREATE TABLE INTR_WSAV (
-	WSANO INTEGER      NOT NULL COMMENT '����ü���ȣ', -- ����ü���ȣ
-	MEMNO INTEGER      NOT NULL COMMENT '�����ȣ', -- �����ȣ
-	ACNM  VARCHAR(50)  NOT NULL COMMENT 'ü���', -- ü���
-	MINNO INTEGER      NOT NULL COMMENT '�ּ��ο�', -- �ּ��ο�
-	MAXNO INTEGER      NOT NULL COMMENT '�ִ��ο�', -- �ִ��ο�
-	ACTDT DATE         NOT NULL COMMENT 'ü������', -- ü������
-	AVST  VARCHAR(20)  NULL     COMMENT '���۽ð�', -- ���۽ð�
-	AVET  VARCHAR(20)  NULL     COMMENT '����ð�', -- ����ð�
-	MTCSE CHAR(1)      NULL     COMMENT '�غ�����', -- �غ�����
-	MTRLS VARCHAR(255) NULL     COMMENT '�غ񹰳���', -- �غ񹰳���
-	APRIC INTEGER      NOT NULL COMMENT 'ü���', -- ü���
-	ACCNT TEXT         NOT NULL COMMENT 'ü��Ұ�', -- ü��Ұ�
-	ACPLC VARCHAR(100) NOT NULL COMMENT 'ü�����' -- ü�����
+    WSANO INTEGER      NOT NULL COMMENT '공방체험번호', -- 공방체험번호
+    MEMNO INTEGER      NOT NULL COMMENT '공방번호', -- 공방번호
+    ACNM  VARCHAR(50)  NOT NULL COMMENT '체험명', -- 체험명
+    MINNO INTEGER      NOT NULL COMMENT '최소인원', -- 최소인원
+    MAXNO INTEGER      NOT NULL COMMENT '최대인원', -- 최대인원
+    ACTDT DATE         NOT NULL COMMENT '체험일자', -- 체험일자
+    AVST  VARCHAR(20)  NULL     COMMENT '시작시간', -- 시작시간
+    AVET  VARCHAR(20)  NULL     COMMENT '종료시간', -- 종료시간
+    MTCSE CHAR(1)      NULL     COMMENT '준비물유무', -- 준비물유무
+    MTRLS VARCHAR(255) NULL     COMMENT '준비물내용', -- 준비물내용
+    APRIC INTEGER      NOT NULL COMMENT '체험료', -- 체험료
+    ACCNT TEXT         NOT NULL COMMENT '체험소개', -- 체험소개
+    ACPLC VARCHAR(100) NOT NULL COMMENT '체험장소' -- 체험장소
 )
-COMMENT '����-����ü��';
+COMMENT '공방-공방체험';
 
--- ����-����ü��
+-- 공방-공방체험
 ALTER TABLE INTR_WSAV
-	ADD CONSTRAINT PK_INTR_WSAV -- ����-����ü�� �⺻Ű
-		PRIMARY KEY (
-			WSANO -- ����ü���ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WSAV -- 공방-공방체험 기본키
+        PRIMARY KEY (
+            WSANO -- 공방체험번호
+        );
 
--- ����-����ü�� �ε���
+-- 공방-공방체험 인덱스
 CREATE INDEX IX_INTR_WSAV
-	ON INTR_WSAV( -- ����-����ü��
-		ACNM ASC -- ü���
-	);
+    ON INTR_WSAV( -- 공방-공방체험
+        ACNM ASC -- 체험명
+    );
 
 ALTER TABLE INTR_WSAV
-	MODIFY COLUMN WSANO INTEGER NOT NULL AUTO_INCREMENT COMMENT '����ü���ȣ';
+    MODIFY COLUMN WSANO INTEGER NOT NULL AUTO_INCREMENT COMMENT '공방체험번호';
 
--- ����ü����
+-- 공방체험등록
 CREATE TABLE INTR_ACRGTT (
-	MEMNO INTEGER NOT NULL COMMENT 'ȸ����ȣ', -- ȸ����ȣ
-	WSANO INTEGER NOT NULL COMMENT '����ü���ȣ', -- ����ü���ȣ
-	ACPT  INTEGER NULL     COMMENT '�ο�', -- �ο�
-	ACRDT DATE    NULL     COMMENT '�������' -- �������
+    MEMNO INTEGER NOT NULL COMMENT '회원번호', -- 회원번호
+    WSANO INTEGER NOT NULL COMMENT '공방체험번호', -- 공방체험번호
+    ACPT  INTEGER NULL     COMMENT '인원', -- 인원
+    ACRDT DATE    NULL     COMMENT '등록일자' -- 등록일자
 )
-COMMENT '����ü����';
+COMMENT '공방체험등록';
 
--- ����ü����
+-- 공방체험등록
 ALTER TABLE INTR_ACRGTT
-	ADD CONSTRAINT PK_INTR_ACRGTT -- ����ü���� �⺻Ű
-		PRIMARY KEY (
-			MEMNO, -- ȸ����ȣ
-			WSANO  -- ����ü���ȣ
-		);
+    ADD CONSTRAINT PK_INTR_ACRGTT -- 공방체험등록 기본키
+        PRIMARY KEY (
+            MEMNO, -- 회원번호
+            WSANO  -- 공방체험번호
+        );
 
--- ����ü�����
+-- 공방체험사진
 CREATE TABLE INTR_WKACP (
-	ACPNO INTEGER      NOT NULL COMMENT '������ȣ', -- ������ȣ
-	WSANO INTEGER      NULL     COMMENT '����ü���ȣ', -- ����ü���ȣ
-	PATH  VARCHAR(255) NULL     COMMENT '����' -- ����
+    ACPNO INTEGER      NOT NULL COMMENT '사진번호', -- 사진번호
+    WSANO INTEGER      NULL     COMMENT '공방체험번호', -- 공방체험번호
+    PATH  VARCHAR(255) NULL     COMMENT '사진' -- 사진
 )
-COMMENT '����ü�����';
+COMMENT '공방체험사진';
 
--- ����ü�����
+-- 공방체험사진
 ALTER TABLE INTR_WKACP
-	ADD CONSTRAINT PK_INTR_WKACP -- ����ü����� �⺻Ű
-		PRIMARY KEY (
-			ACPNO -- ������ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WKACP -- 공방체험사진 기본키
+        PRIMARY KEY (
+            ACPNO -- 사진번호
+        );
 
 ALTER TABLE INTR_WKACP
-	MODIFY COLUMN ACPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '������ȣ';
+    MODIFY COLUMN ACPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '사진번호';
 
--- �������
+-- 공방사진
 CREATE TABLE INTR_WSPHO (
-	WSPNO INTEGER      NOT NULL COMMENT '���������ȣ', -- ���������ȣ
-	MEMNO INTEGER      NULL     COMMENT '�����ȣ', -- �����ȣ
-	PCLSF VARCHAR(25)  NULL     COMMENT '��������(Ŀ��/�Ұ�/main/ȫ���̹���)', -- ��������(Ŀ��/�Ұ�/main/ȫ���̹���)
-	PATH  VARCHAR(255) NULL     COMMENT '����' -- ����
+    WSPNO INTEGER      NOT NULL COMMENT '공방사진번호', -- 공방사진번호
+    MEMNO INTEGER      NULL     COMMENT '공방번호', -- 공방번호
+    PCLSF VARCHAR(25)  NULL     COMMENT '사진구분(커버/소개/main/홍보이미지)', -- 사진구분(커버/소개/main/홍보이미지)
+    PATH  VARCHAR(255) NULL     COMMENT '사진' -- 사진
 )
-COMMENT '�������';
+COMMENT '공방사진';
 
--- �������
+-- 공방사진
 ALTER TABLE INTR_WSPHO
-	ADD CONSTRAINT PK_INTR_WSPHO -- ������� �⺻Ű
-		PRIMARY KEY (
-			WSPNO -- ���������ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WSPHO -- 공방사진 기본키
+        PRIMARY KEY (
+            WSPNO -- 공방사진번호
+        );
 
 ALTER TABLE INTR_WSPHO
-	MODIFY COLUMN WSPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '���������ȣ';
+    MODIFY COLUMN WSPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '공방사진번호';
 
--- ��ǰ�ɼ�
+-- 작품옵션
 CREATE TABLE INTR_WKOT (
-	OPNO INTEGER      NOT NULL COMMENT '�ɼǹ�ȣ', -- �ɼǹ�ȣ
-	WNO  INTEGER      NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	ABNM VARCHAR(100) NULL     COMMENT '�Ӽ���', -- �Ӽ���
-	ABVL VARCHAR(100) NULL     COMMENT '�Ӽ���' -- �Ӽ���
+    OPNO INTEGER      NOT NULL COMMENT '옵션번호', -- 옵션번호
+    WNO  INTEGER      NOT NULL COMMENT '작품번호', -- 작품번호
+    ABNM VARCHAR(100) NULL     COMMENT '속성명', -- 속성명
+    ABVL VARCHAR(100) NULL     COMMENT '속성값' -- 속성값
 )
-COMMENT '��ǰ�ɼ�';
+COMMENT '작품옵션';
 
--- ��ǰ�ɼ�
+-- 작품옵션
 ALTER TABLE INTR_WKOT
-	ADD CONSTRAINT PK_INTR_WKOT -- ��ǰ�ɼ� �⺻Ű
-		PRIMARY KEY (
-			OPNO -- �ɼǹ�ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WKOT -- 작품옵션 기본키
+        PRIMARY KEY (
+            OPNO -- 옵션번호
+        );
 
 ALTER TABLE INTR_WKOT
-	MODIFY COLUMN OPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '�ɼǹ�ȣ';
+    MODIFY COLUMN OPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '옵션번호';
 
--- ��ǰ����
+-- 작품사진
 CREATE TABLE INTR_WPHO (
-	WPNO INTEGER      NOT NULL COMMENT '������ȣ', -- ������ȣ
-	WNO  INTEGER      NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	PATH VARCHAR(255) NULL     COMMENT '����' -- ����
+    WPNO INTEGER      NOT NULL COMMENT '사진번호', -- 사진번호
+    WNO  INTEGER      NOT NULL COMMENT '작품번호', -- 작품번호
+    PATH VARCHAR(255) NULL     COMMENT '사진' -- 사진
 )
-COMMENT '��ǰ����';
+COMMENT '작품사진';
 
--- ��ǰ����
+-- 작품사진
 ALTER TABLE INTR_WPHO
-	ADD CONSTRAINT PK_INTR_WPHO -- ��ǰ���� �⺻Ű
-		PRIMARY KEY (
-			WPNO -- ������ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WPHO -- 작품사진 기본키
+        PRIMARY KEY (
+            WPNO -- 사진번호
+        );
 
 ALTER TABLE INTR_WPHO
-	MODIFY COLUMN WPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '������ȣ';
+    MODIFY COLUMN WPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '사진번호';
 
--- ����
+-- 문의
 CREATE TABLE INTR_QNA (
-	QNO    INTEGER      NOT NULL COMMENT '���ǹ�ȣ', -- ���ǹ�ȣ
-	QRTDT  DATE         NOT NULL COMMENT '��������', -- ��������
-	TOIQ   VARCHAR(100) NOT NULL COMMENT '��������', -- ��������
-	IQCT   VARCHAR(255) NOT NULL COMMENT '���ǳ���', -- ���ǳ���
-	ARTDT  DATE         NULL     COMMENT '���Ǵ亯����', -- ���Ǵ亯����
-	AWQT   VARCHAR(255) NULL     COMMENT '���Ǵ亯����', -- ���Ǵ亯����
-	WNO    INTEGER      NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	MEMNO  INTEGER      NOT NULL COMMENT 'ȸ����ȣ', -- ȸ����ȣ
-	MEMNO2 INTEGER      NOT NULL COMMENT '�����ȣ' -- �����ȣ
+    QNO    INTEGER      NOT NULL COMMENT '문의번호', -- 문의번호
+    QRTDT  DATE         NOT NULL COMMENT '문의일자', -- 문의일자
+    TOIQ   VARCHAR(100) NOT NULL COMMENT '문의유형', -- 문의유형
+    IQCT   VARCHAR(255) NOT NULL COMMENT '문의내용', -- 문의내용
+    ARTDT  DATE         NULL     COMMENT '문의답변일자', -- 문의답변일자
+    AWQT   VARCHAR(255) NULL     COMMENT '문의답변내용', -- 문의답변내용
+    WNO    INTEGER      NOT NULL COMMENT '작품번호', -- 작품번호
+    MEMNO  INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+    MEMNO2 INTEGER      NOT NULL COMMENT '공방번호' -- 공방번호
 )
-COMMENT '����';
+COMMENT '문의';
 
--- ����
+-- 문의
 ALTER TABLE INTR_QNA
-	ADD CONSTRAINT PK_INTR_QNA -- ���� �⺻Ű
-		PRIMARY KEY (
-			QNO -- ���ǹ�ȣ
-		);
+    ADD CONSTRAINT PK_INTR_QNA -- 문의 기본키
+        PRIMARY KEY (
+            QNO -- 문의번호
+        );
 
 ALTER TABLE INTR_QNA
-	MODIFY COLUMN QNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '���ǹ�ȣ';
+    MODIFY COLUMN QNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '문의번호';
 
--- ���ƿ�
+-- 좋아요
 CREATE TABLE INTR_LKMB (
-	LNO   INTEGER NOT NULL COMMENT '���ƿ��ȣ', -- ���ƿ��ȣ
-	BNO   INTEGER NOT NULL COMMENT '�Խù���ȣ', -- �Խù���ȣ
-	MEMNO INTEGER NOT NULL COMMENT 'ȸ����ȣ(Ŭ���ѻ��)' -- ȸ����ȣ(Ŭ���ѻ��)
+    LNO   INTEGER NOT NULL COMMENT '좋아요번호', -- 좋아요번호
+    BNO   INTEGER NOT NULL COMMENT '게시물번호', -- 게시물번호
+    MEMNO INTEGER NOT NULL COMMENT '회원번호(클릭한사람)' -- 회원번호(클릭한사람)
 )
-COMMENT '���ƿ�';
+COMMENT '좋아요';
 
--- ���ƿ�
+-- 좋아요
 ALTER TABLE INTR_LKMB
-	ADD CONSTRAINT PK_INTR_LKMB -- ���ƿ� �⺻Ű
-		PRIMARY KEY (
-			LNO -- ���ƿ��ȣ
-		);
+    ADD CONSTRAINT PK_INTR_LKMB -- 좋아요 기본키
+        PRIMARY KEY (
+            LNO -- 좋아요번호
+        );
 
 ALTER TABLE INTR_LKMB
-	MODIFY COLUMN LNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '���ƿ��ȣ';
+    MODIFY COLUMN LNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '좋아요번호';
 
--- �������
+-- 리뷰사진
 CREATE TABLE INTR_RVPHO (
-	RVPNO INTEGER      NOT NULL COMMENT '������ȣ', -- ������ȣ
-	WONO  INTEGER      NULL     COMMENT '��ǰ�ֹ���ȣ', -- ��ǰ�ֹ���ȣ
-	PATH  VARCHAR(255) NULL     COMMENT '�������' -- �������
+    RVPNO INTEGER      NOT NULL COMMENT '사진번호', -- 사진번호
+    WONO  INTEGER      NULL     COMMENT '작품주문번호', -- 작품주문번호
+    PATH  VARCHAR(255) NULL     COMMENT '리뷰사진' -- 리뷰사진
 )
-COMMENT '�������';
+COMMENT '리뷰사진';
 
--- �������
+-- 리뷰사진
 ALTER TABLE INTR_RVPHO
-	ADD CONSTRAINT PK_INTR_RVPHO -- ������� �⺻Ű
-		PRIMARY KEY (
-			RVPNO -- ������ȣ
-		);
+    ADD CONSTRAINT PK_INTR_RVPHO -- 리뷰사진 기본키
+        PRIMARY KEY (
+            RVPNO -- 사진번호
+        );
 
 ALTER TABLE INTR_RVPHO
-	MODIFY COLUMN RVPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '������ȣ';
+    MODIFY COLUMN RVPNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '사진번호';
 
--- ��ũ��(����)
+-- 스크랩(공방)
 CREATE TABLE INTR_SPSTUD (
-	MEMNO  INTEGER NOT NULL COMMENT '�����ȣ', -- �����ȣ
-	MEMNO2 INTEGER NOT NULL COMMENT 'ȸ����ȣ' -- ȸ����ȣ
+    MEMNO  INTEGER NOT NULL COMMENT '공방번호', -- 공방번호
+    MEMNO2 INTEGER NOT NULL COMMENT '회원번호' -- 회원번호
 )
-COMMENT '��ũ��(����)';
+COMMENT '스크랩(공방)';
 
--- ��ũ��(����)
+-- 스크랩(공방)
 ALTER TABLE INTR_SPSTUD
-	ADD CONSTRAINT PK_INTR_SPSTUD -- ��ũ��(����) �⺻Ű
-		PRIMARY KEY (
-			MEMNO,  -- �����ȣ
-			MEMNO2  -- ȸ����ȣ
-		);
+    ADD CONSTRAINT PK_INTR_SPSTUD -- 스크랩(공방) 기본키
+        PRIMARY KEY (
+            MEMNO,  -- 공방번호
+            MEMNO2  -- 회원번호
+        );
 
--- ��ũ��(�Ǹ���ǰ)
+-- 스크랩(판매작품)
 CREATE TABLE INTR_SPSW (
-	WNO   INTEGER NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	MEMNO INTEGER NOT NULL COMMENT 'ȸ����ȣ' -- ȸ����ȣ
+    WNO   INTEGER NOT NULL COMMENT '작품번호', -- 작품번호
+    MEMNO INTEGER NOT NULL COMMENT '회원번호' -- 회원번호
 )
-COMMENT '��ũ��(�Ǹ���ǰ)';
+COMMENT '스크랩(판매작품)';
 
--- ��ũ��(�Ǹ���ǰ)
+-- 스크랩(판매작품)
 ALTER TABLE INTR_SPSW
-	ADD CONSTRAINT PK_INTR_SPSW -- ��ũ��(�Ǹ���ǰ) �⺻Ű
-		PRIMARY KEY (
-			WNO,   -- ��ǰ��ȣ
-			MEMNO  -- ȸ����ȣ
-		);
+    ADD CONSTRAINT PK_INTR_SPSW -- 스크랩(판매작품) 기본키
+        PRIMARY KEY (
+            WNO,   -- 작품번호
+            MEMNO  -- 회원번호
+        );
 
--- �ؽ��±�
+-- 해시태그
 CREATE TABLE INTR_HASHTAG (
-	HTNO  INTEGER      NOT NULL COMMENT '�ؽ��±׹�ȣ', -- �ؽ��±׹�ȣ
-	TNAME VARCHAR(100) NULL     COMMENT '�±׸�' -- �±׸�
+    HTNO  INTEGER      NOT NULL COMMENT '해시태그번호', -- 해시태그번호
+    TNAME VARCHAR(100) NULL     COMMENT '태그명' -- 태그명
 )
-COMMENT '�ؽ��±�';
+COMMENT '해시태그';
 
--- �ؽ��±�
+-- 해시태그
 ALTER TABLE INTR_HASHTAG
-	ADD CONSTRAINT PK_INTR_HASHTAG -- �ؽ��±� �⺻Ű
-		PRIMARY KEY (
-			HTNO -- �ؽ��±׹�ȣ
-		);
+    ADD CONSTRAINT PK_INTR_HASHTAG -- 해시태그 기본키
+        PRIMARY KEY (
+            HTNO -- 해시태그번호
+        );
 
--- �ؽ��±� �ε���
+-- 해시태그 인덱스
 CREATE INDEX IX_INTR_HASHTAG
-	ON INTR_HASHTAG( -- �ؽ��±�
-		TNAME ASC -- �±׸�
-	);
+    ON INTR_HASHTAG( -- 해시태그
+        TNAME ASC -- 태그명
+    );
 
 ALTER TABLE INTR_HASHTAG
-	MODIFY COLUMN HTNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '�ؽ��±׹�ȣ';
+    MODIFY COLUMN HTNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '해시태그번호';
 
--- ��ǰ�±׸�Ī
+-- 작품태그매칭
 CREATE TABLE INTR_WTMACH (
-	WNO  INTEGER NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	HTNO INTEGER NOT NULL COMMENT '�ؽ��±׹�ȣ' -- �ؽ��±׹�ȣ
+    WNO  INTEGER NOT NULL COMMENT '작품번호', -- 작품번호
+    HTNO INTEGER NOT NULL COMMENT '해시태그번호' -- 해시태그번호
 )
-COMMENT '��ǰ�±׸�Ī';
+COMMENT '작품태그매칭';
 
--- ��ǰ�±׸�Ī
+-- 작품태그매칭
 ALTER TABLE INTR_WTMACH
-	ADD CONSTRAINT PK_INTR_WTMACH -- ��ǰ�±׸�Ī �⺻Ű
-		PRIMARY KEY (
-			WNO,  -- ��ǰ��ȣ
-			HTNO  -- �ؽ��±׹�ȣ
-		);
+    ADD CONSTRAINT PK_INTR_WTMACH -- 작품태그매칭 기본키
+        PRIMARY KEY (
+            WNO,  -- 작품번호
+            HTNO  -- 해시태그번호
+        );
 
--- �Խù��±׸�Ī
+-- 게시물태그매칭
 CREATE TABLE INTR_BTMACH (
-	HTNO INTEGER NOT NULL COMMENT '�ؽ��±׹�ȣ', -- �ؽ��±׹�ȣ
-	BNO  INTEGER NOT NULL COMMENT '�Խù���ȣ' -- �Խù���ȣ
+    HTNO INTEGER NOT NULL COMMENT '해시태그번호', -- 해시태그번호
+    BNO  INTEGER NOT NULL COMMENT '게시물번호' -- 게시물번호
 )
-COMMENT '�Խù��±׸�Ī';
+COMMENT '게시물태그매칭';
 
--- �Խù��±׸�Ī
+-- 게시물태그매칭
 ALTER TABLE INTR_BTMACH
-	ADD CONSTRAINT PK_INTR_BTMACH -- �Խù��±׸�Ī �⺻Ű
-		PRIMARY KEY (
-			HTNO, -- �ؽ��±׹�ȣ
-			BNO   -- �Խù���ȣ
-		);
+    ADD CONSTRAINT PK_INTR_BTMACH -- 게시물태그매칭 기본키
+        PRIMARY KEY (
+            HTNO, -- 해시태그번호
+            BNO   -- 게시물번호
+        );
 
--- �����±׸�Ī
+-- 공방태그매칭
 CREATE TABLE INTR_STMACH (
-	MEMNO INTEGER NOT NULL COMMENT '�����ȣ', -- �����ȣ
-	HTNO  INTEGER NOT NULL COMMENT '�ؽ��±׹�ȣ' -- �ؽ��±׹�ȣ
+    MEMNO INTEGER NOT NULL COMMENT '공방번호', -- 공방번호
+    HTNO  INTEGER NOT NULL COMMENT '해시태그번호' -- 해시태그번호
 )
-COMMENT '�����±׸�Ī';
+COMMENT '공방태그매칭';
 
--- �����±׸�Ī
+-- 공방태그매칭
 ALTER TABLE INTR_STMACH
-	ADD CONSTRAINT PK_INTR_STMACH -- �����±׸�Ī �⺻Ű
-		PRIMARY KEY (
-			MEMNO, -- �����ȣ
-			HTNO   -- �ؽ��±׹�ȣ
-		);
+    ADD CONSTRAINT PK_INTR_STMACH -- 공방태그매칭 기본키
+        PRIMARY KEY (
+            MEMNO, -- 공방번호
+            HTNO   -- 해시태그번호
+        );
 
--- ��ٱ���
+-- 장바구니
 CREATE TABLE INTR_SPBK (
-	WNO   INTEGER NOT NULL COMMENT '��ǰ��ȣ', -- ��ǰ��ȣ
-	MEMNO INTEGER NOT NULL COMMENT 'ȸ����ȣ' -- ȸ����ȣ
+    WNO   INTEGER NOT NULL COMMENT '작품번호', -- 작품번호
+    MEMNO INTEGER NOT NULL COMMENT '회원번호' -- 회원번호
 )
-COMMENT '��ٱ���';
+COMMENT '장바구니';
 
--- ��ٱ���
+-- 장바구니
 ALTER TABLE INTR_SPBK
-	ADD CONSTRAINT PK_INTR_SPBK -- ��ٱ��� �⺻Ű
-		PRIMARY KEY (
-			WNO,   -- ��ǰ��ȣ
-			MEMNO  -- ȸ����ȣ
-		);
+    ADD CONSTRAINT PK_INTR_SPBK -- 장바구니 기본키
+        PRIMARY KEY (
+            WNO,   -- 작품번호
+            MEMNO  -- 회원번호
+        );
 
--- �޽���
+-- 메시지
 CREATE TABLE INTR_MESSAGE (
-	MSNO   INTEGER NOT NULL COMMENT '�޽�����ȣ', -- �޽�����ȣ
-	MEMNO  INTEGER NOT NULL COMMENT '�����1', -- �����1
-	MEMNO2 INTEGER NOT NULL COMMENT '�����2', -- �����2
-	MSCTT  TEXT    NULL     COMMENT '����', -- ����
-	MSDIR  CHAR(1) NOT NULL COMMENT '�޽�������', -- �޽�������
-	MDATE  DATE    NOT NULL COMMENT '��¥' -- ��¥
+    MSNO   INTEGER NOT NULL COMMENT '메시지번호', -- 메시지번호
+    MEMNO  INTEGER NOT NULL COMMENT '사용자1', -- 사용자1
+    MEMNO2 INTEGER NOT NULL COMMENT '사용자2', -- 사용자2
+    MSCTT  TEXT    NULL     COMMENT '내용', -- 내용
+    MSDIR  CHAR(1) NOT NULL COMMENT '메시지방향', -- 메시지방향
+    MDATE  DATE    NOT NULL COMMENT '날짜' -- 날짜
 )
-COMMENT '�޽���';
+COMMENT '메시지';
 
--- �޽���
+-- 메시지
 ALTER TABLE INTR_MESSAGE
-	ADD CONSTRAINT PK_INTR_MESSAGE -- �޽��� �⺻Ű
-		PRIMARY KEY (
-			MSNO -- �޽�����ȣ
-		);
+    ADD CONSTRAINT PK_INTR_MESSAGE -- 메시지 기본키
+        PRIMARY KEY (
+            MSNO -- 메시지번호
+        );
 
 ALTER TABLE INTR_MESSAGE
-	MODIFY COLUMN MSNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '�޽�����ȣ';
+    MODIFY COLUMN MSNO INTEGER NOT NULL AUTO_INCREMENT COMMENT '메시지번호';
 
--- �Խù�
+-- 게시물
 ALTER TABLE INTR_BOARD
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_BOARD -- ȸ�� -> �Խù�
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_BOARD -- 회원 -> 게시물
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ����(�ȷο� �ȷ���)
+-- 관계(팔로워 팔로잉)
 ALTER TABLE INTR_RLTSP
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_RLTSP -- ȸ�� -> ����(�ȷο� �ȷ���)2
-		FOREIGN KEY (
-			MEMNO2 -- ȸ����ȣ2
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_RLTSP -- 회원 -> 관계(팔로워 팔로잉)2
+        FOREIGN KEY (
+            MEMNO2 -- 회원번호2
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ����(�ȷο� �ȷ���)
+-- 관계(팔로워 팔로잉)
 ALTER TABLE INTR_RLTSP
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_RLTSP2 -- ȸ�� -> ����(�ȷο� �ȷ���)
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_RLTSP2 -- 회원 -> 관계(팔로워 팔로잉)
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ���
+-- 댓글
 ALTER TABLE INTR_BCMMT
-	ADD CONSTRAINT FK_INTR_BOARD_TO_INTR_BCMMT -- �Խù� -> ���
-		FOREIGN KEY (
-			BNO -- �Խù���ȣ
-		)
-		REFERENCES INTR_BOARD ( -- �Խù�
-			BNO -- �Խù���ȣ
-		);
+    ADD CONSTRAINT FK_INTR_BOARD_TO_INTR_BCMMT -- 게시물 -> 댓글
+        FOREIGN KEY (
+            BNO -- 게시물번호
+        )
+        REFERENCES INTR_BOARD ( -- 게시물
+            BNO -- 게시물번호
+        );
 
--- ���
+-- 댓글
 ALTER TABLE INTR_BCMMT
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_BCMMT -- ȸ�� -> ���
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_BCMMT -- 회원 -> 댓글
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ��ǰ
+-- 작품
 ALTER TABLE INTR_WORKS
-	ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_WORKS -- ���� -> ��ǰ
-		FOREIGN KEY (
-			MEMNO -- �����ȣ
-		)
-		REFERENCES INTR_WRKSHP ( -- ����
-			MEMNO -- �����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_WORKS -- 공방 -> 작품
+        FOREIGN KEY (
+            MEMNO -- 공방번호
+        )
+        REFERENCES INTR_WRKSHP ( -- 공방
+            MEMNO -- 공방번호
+        );
 
--- �ֹ�
+-- 주문
 ALTER TABLE INTR_ORDER
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_ORDER -- ȸ�� -> �ֹ�
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_ORDER -- 회원 -> 주문
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- �ֹ�/��ǰ
+-- 주문/작품
 ALTER TABLE INTR_ODNWK
-	ADD CONSTRAINT FK_INTR_ORDER_TO_INTR_ODNWK -- �ֹ� -> �ֹ�/��ǰ
-		FOREIGN KEY (
-			ODNO -- �ֹ���ȣ
-		)
-		REFERENCES INTR_ORDER ( -- �ֹ�
-			ODNO -- �ֹ���ȣ
-		);
+    ADD CONSTRAINT FK_INTR_ORDER_TO_INTR_ODNWK -- 주문 -> 주문/작품
+        FOREIGN KEY (
+            ODNO -- 주문번호
+        )
+        REFERENCES INTR_ORDER ( -- 주문
+            ODNO -- 주문번호
+        );
 
--- �ֹ�/��ǰ
+-- 주문/작품
 ALTER TABLE INTR_ODNWK
-	ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_ODNWK -- ��ǰ -> �ֹ�/��ǰ
-		FOREIGN KEY (
-			WNO -- ��ǰ��ȣ
-		)
-		REFERENCES INTR_WORKS ( -- ��ǰ
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_ODNWK -- 작품 -> 주문/작품
+        FOREIGN KEY (
+            WNO -- 작품번호
+        )
+        REFERENCES INTR_WORKS ( -- 작품
+            WNO -- 작품번호
+        );
 
--- ����
+-- 공방
 ALTER TABLE INTR_WRKSHP
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_WRKSHP -- ȸ�� -> ����
-		FOREIGN KEY (
-			MEMNO -- �����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_WRKSHP -- 회원 -> 공방
+        FOREIGN KEY (
+            MEMNO -- 공방번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ����-����ü��
+-- 공방-공방체험
 ALTER TABLE INTR_WSAV
-	ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_WSAV -- ���� -> ����-����ü��
-		FOREIGN KEY (
-			MEMNO -- �����ȣ
-		)
-		REFERENCES INTR_WRKSHP ( -- ����
-			MEMNO -- �����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_WSAV -- 공방 -> 공방-공방체험
+        FOREIGN KEY (
+            MEMNO -- 공방번호
+        )
+        REFERENCES INTR_WRKSHP ( -- 공방
+            MEMNO -- 공방번호
+        );
 
--- ����ü����
+-- 공방체험등록
 ALTER TABLE INTR_ACRGTT
-	ADD CONSTRAINT FK_INTR_WSAV_TO_INTR_ACRGTT -- ����-����ü�� -> ����ü����
-		FOREIGN KEY (
-			WSANO -- ����ü���ȣ
-		)
-		REFERENCES INTR_WSAV ( -- ����-����ü��
-			WSANO -- ����ü���ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WSAV_TO_INTR_ACRGTT -- 공방-공방체험 -> 공방체험등록
+        FOREIGN KEY (
+            WSANO -- 공방체험번호
+        )
+        REFERENCES INTR_WSAV ( -- 공방-공방체험
+            WSANO -- 공방체험번호
+        );
 
--- ����ü����
+-- 공방체험등록
 ALTER TABLE INTR_ACRGTT
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_ACRGTT -- ȸ�� -> ����ü����
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_ACRGTT -- 회원 -> 공방체험등록
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ����ü�����
+-- 공방체험사진
 ALTER TABLE INTR_WKACP
-	ADD CONSTRAINT FK_INTR_WSAV_TO_INTR_WKACP -- ����-����ü�� -> ����ü�����
-		FOREIGN KEY (
-			WSANO -- ����ü���ȣ
-		)
-		REFERENCES INTR_WSAV ( -- ����-����ü��
-			WSANO -- ����ü���ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WSAV_TO_INTR_WKACP -- 공방-공방체험 -> 공방체험사진
+        FOREIGN KEY (
+            WSANO -- 공방체험번호
+        )
+        REFERENCES INTR_WSAV ( -- 공방-공방체험
+            WSANO -- 공방체험번호
+        );
 
--- �������
+-- 공방사진
 ALTER TABLE INTR_WSPHO
-	ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_WSPHO -- ���� -> �������
-		FOREIGN KEY (
-			MEMNO -- �����ȣ
-		)
-		REFERENCES INTR_WRKSHP ( -- ����
-			MEMNO -- �����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_WSPHO -- 공방 -> 공방사진
+        FOREIGN KEY (
+            MEMNO -- 공방번호
+        )
+        REFERENCES INTR_WRKSHP ( -- 공방
+            MEMNO -- 공방번호
+        );
 
--- ��ǰ�ɼ�
+-- 작품옵션
 ALTER TABLE INTR_WKOT
-	ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_WKOT -- ��ǰ -> ��ǰ�ɼ�
-		FOREIGN KEY (
-			WNO -- ��ǰ��ȣ
-		)
-		REFERENCES INTR_WORKS ( -- ��ǰ
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_WKOT -- 작품 -> 작품옵션
+        FOREIGN KEY (
+            WNO -- 작품번호
+        )
+        REFERENCES INTR_WORKS ( -- 작품
+            WNO -- 작품번호
+        );
 
--- ��ǰ����
+-- 작품사진
 ALTER TABLE INTR_WPHO
-	ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_WPHO -- ��ǰ -> ��ǰ����
-		FOREIGN KEY (
-			WNO -- ��ǰ��ȣ
-		)
-		REFERENCES INTR_WORKS ( -- ��ǰ
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_WPHO -- 작품 -> 작품사진
+        FOREIGN KEY (
+            WNO -- 작품번호
+        )
+        REFERENCES INTR_WORKS ( -- 작품
+            WNO -- 작품번호
+        );
 
--- ����
+-- 문의
 ALTER TABLE INTR_QNA
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_QNA -- ȸ�� -> ����
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_QNA -- 회원 -> 문의
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ����
+-- 문의
 ALTER TABLE INTR_QNA
-	ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_QNA -- ��ǰ -> ����
-		FOREIGN KEY (
-			WNO -- ��ǰ��ȣ
-		)
-		REFERENCES INTR_WORKS ( -- ��ǰ
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_QNA -- 작품 -> 문의
+        FOREIGN KEY (
+            WNO -- 작품번호
+        )
+        REFERENCES INTR_WORKS ( -- 작품
+            WNO -- 작품번호
+        );
 
--- ����
+-- 문의
 ALTER TABLE INTR_QNA
-	ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_QNA -- ���� -> ����
-		FOREIGN KEY (
-			MEMNO2 -- �����ȣ
-		)
-		REFERENCES INTR_WRKSHP ( -- ����
-			MEMNO -- �����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_QNA -- 공방 -> 문의
+        FOREIGN KEY (
+            MEMNO2 -- 공방번호
+        )
+        REFERENCES INTR_WRKSHP ( -- 공방
+            MEMNO -- 공방번호
+        );
 
--- ���ƿ�
+-- 좋아요
 ALTER TABLE INTR_LKMB
-	ADD CONSTRAINT FK_INTR_BOARD_TO_INTR_LKMB -- �Խù� -> ���ƿ�
-		FOREIGN KEY (
-			BNO -- �Խù���ȣ
-		)
-		REFERENCES INTR_BOARD ( -- �Խù�
-			BNO -- �Խù���ȣ
-		);
+    ADD CONSTRAINT FK_INTR_BOARD_TO_INTR_LKMB -- 게시물 -> 좋아요
+        FOREIGN KEY (
+            BNO -- 게시물번호
+        )
+        REFERENCES INTR_BOARD ( -- 게시물
+            BNO -- 게시물번호
+        );
 
--- ���ƿ�
+-- 좋아요
 ALTER TABLE INTR_LKMB
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_LKMB -- ȸ�� -> ���ƿ�
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ(Ŭ���ѻ��)
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_LKMB -- 회원 -> 좋아요
+        FOREIGN KEY (
+            MEMNO -- 회원번호(클릭한사람)
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- �������
+-- 리뷰사진
 ALTER TABLE INTR_RVPHO
-	ADD CONSTRAINT FK_INTR_ODNWK_TO_INTR_RVPHO -- �ֹ�/��ǰ -> �������
-		FOREIGN KEY (
-			WONO -- ��ǰ�ֹ���ȣ
-		)
-		REFERENCES INTR_ODNWK ( -- �ֹ�/��ǰ
-			WONO -- ��ǰ�ֹ���ȣ
-		);
+    ADD CONSTRAINT FK_INTR_ODNWK_TO_INTR_RVPHO -- 주문/작품 -> 리뷰사진
+        FOREIGN KEY (
+            WONO -- 작품주문번호
+        )
+        REFERENCES INTR_ODNWK ( -- 주문/작품
+            WONO -- 작품주문번호
+        );
 
--- ��ũ��(����)
+-- 스크랩(공방)
 ALTER TABLE INTR_SPSTUD
-	ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_SPSTUD -- ���� -> ��ũ��(����)
-		FOREIGN KEY (
-			MEMNO -- �����ȣ
-		)
-		REFERENCES INTR_WRKSHP ( -- ����
-			MEMNO -- �����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_SPSTUD -- 공방 -> 스크랩(공방)
+        FOREIGN KEY (
+            MEMNO -- 공방번호
+        )
+        REFERENCES INTR_WRKSHP ( -- 공방
+            MEMNO -- 공방번호
+        );
 
--- ��ũ��(����)
+-- 스크랩(공방)
 ALTER TABLE INTR_SPSTUD
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_SPSTUD -- ȸ�� -> ��ũ��(����)
-		FOREIGN KEY (
-			MEMNO2 -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_SPSTUD -- 회원 -> 스크랩(공방)
+        FOREIGN KEY (
+            MEMNO2 -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ��ũ��(�Ǹ���ǰ)
+-- 스크랩(판매작품)
 ALTER TABLE INTR_SPSW
-	ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_SPSW -- ��ǰ -> ��ũ��(�Ǹ���ǰ)
-		FOREIGN KEY (
-			WNO -- ��ǰ��ȣ
-		)
-		REFERENCES INTR_WORKS ( -- ��ǰ
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_SPSW -- 작품 -> 스크랩(판매작품)
+        FOREIGN KEY (
+            WNO -- 작품번호
+        )
+        REFERENCES INTR_WORKS ( -- 작품
+            WNO -- 작품번호
+        );
 
--- ��ũ��(�Ǹ���ǰ)
+-- 스크랩(판매작품)
 ALTER TABLE INTR_SPSW
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_SPSW -- ȸ�� -> ��ũ��(�Ǹ���ǰ)
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_SPSW -- 회원 -> 스크랩(판매작품)
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- ��ǰ�±׸�Ī
+-- 작품태그매칭
 ALTER TABLE INTR_WTMACH
-	ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_WTMACH -- ��ǰ -> ��ǰ�±׸�Ī
-		FOREIGN KEY (
-			WNO -- ��ǰ��ȣ
-		)
-		REFERENCES INTR_WORKS ( -- ��ǰ
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_WTMACH -- 작품 -> 작품태그매칭
+        FOREIGN KEY (
+            WNO -- 작품번호
+        )
+        REFERENCES INTR_WORKS ( -- 작품
+            WNO -- 작품번호
+        );
 
--- ��ǰ�±׸�Ī
+-- 작품태그매칭
 ALTER TABLE INTR_WTMACH
-	ADD CONSTRAINT FK_INTR_HASHTAG_TO_INTR_WTMACH -- �ؽ��±� -> ��ǰ�±׸�Ī
-		FOREIGN KEY (
-			HTNO -- �ؽ��±׹�ȣ
-		)
-		REFERENCES INTR_HASHTAG ( -- �ؽ��±�
-			HTNO -- �ؽ��±׹�ȣ
-		);
+    ADD CONSTRAINT FK_INTR_HASHTAG_TO_INTR_WTMACH -- 해시태그 -> 작품태그매칭
+        FOREIGN KEY (
+            HTNO -- 해시태그번호
+        )
+        REFERENCES INTR_HASHTAG ( -- 해시태그
+            HTNO -- 해시태그번호
+        );
 
--- �Խù��±׸�Ī
+-- 게시물태그매칭
 ALTER TABLE INTR_BTMACH
-	ADD CONSTRAINT FK_INTR_HASHTAG_TO_INTR_BTMACH -- �ؽ��±� -> �Խù��±׸�Ī
-		FOREIGN KEY (
-			HTNO -- �ؽ��±׹�ȣ
-		)
-		REFERENCES INTR_HASHTAG ( -- �ؽ��±�
-			HTNO -- �ؽ��±׹�ȣ
-		);
+    ADD CONSTRAINT FK_INTR_HASHTAG_TO_INTR_BTMACH -- 해시태그 -> 게시물태그매칭
+        FOREIGN KEY (
+            HTNO -- 해시태그번호
+        )
+        REFERENCES INTR_HASHTAG ( -- 해시태그
+            HTNO -- 해시태그번호
+        );
 
--- �Խù��±׸�Ī
+-- 게시물태그매칭
 ALTER TABLE INTR_BTMACH
-	ADD CONSTRAINT FK_INTR_BOARD_TO_INTR_BTMACH -- �Խù� -> �Խù��±׸�Ī
-		FOREIGN KEY (
-			BNO -- �Խù���ȣ
-		)
-		REFERENCES INTR_BOARD ( -- �Խù�
-			BNO -- �Խù���ȣ
-		);
+    ADD CONSTRAINT FK_INTR_BOARD_TO_INTR_BTMACH -- 게시물 -> 게시물태그매칭
+        FOREIGN KEY (
+            BNO -- 게시물번호
+        )
+        REFERENCES INTR_BOARD ( -- 게시물
+            BNO -- 게시물번호
+        );
 
--- �����±׸�Ī
+-- 공방태그매칭
 ALTER TABLE INTR_STMACH
-	ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_STMACH -- ���� -> �����±׸�Ī
-		FOREIGN KEY (
-			MEMNO -- �����ȣ
-		)
-		REFERENCES INTR_WRKSHP ( -- ����
-			MEMNO -- �����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WRKSHP_TO_INTR_STMACH -- 공방 -> 공방태그매칭
+        FOREIGN KEY (
+            MEMNO -- 공방번호
+        )
+        REFERENCES INTR_WRKSHP ( -- 공방
+            MEMNO -- 공방번호
+        );
 
--- �����±׸�Ī
+-- 공방태그매칭
 ALTER TABLE INTR_STMACH
-	ADD CONSTRAINT FK_INTR_HASHTAG_TO_INTR_STMACH -- �ؽ��±� -> �����±׸�Ī
-		FOREIGN KEY (
-			HTNO -- �ؽ��±׹�ȣ
-		)
-		REFERENCES INTR_HASHTAG ( -- �ؽ��±�
-			HTNO -- �ؽ��±׹�ȣ
-		);
+    ADD CONSTRAINT FK_INTR_HASHTAG_TO_INTR_STMACH -- 해시태그 -> 공방태그매칭
+        FOREIGN KEY (
+            HTNO -- 해시태그번호
+        )
+        REFERENCES INTR_HASHTAG ( -- 해시태그
+            HTNO -- 해시태그번호
+        );
 
--- ��ٱ���
+-- 장바구니
 ALTER TABLE INTR_SPBK
-	ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_SPBK -- ��ǰ -> ��ٱ���
-		FOREIGN KEY (
-			WNO -- ��ǰ��ȣ
-		)
-		REFERENCES INTR_WORKS ( -- ��ǰ
-			WNO -- ��ǰ��ȣ
-		);
+    ADD CONSTRAINT FK_INTR_WORKS_TO_INTR_SPBK -- 작품 -> 장바구니
+        FOREIGN KEY (
+            WNO -- 작품번호
+        )
+        REFERENCES INTR_WORKS ( -- 작품
+            WNO -- 작품번호
+        );
 
--- ��ٱ���
+-- 장바구니
 ALTER TABLE INTR_SPBK
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_SPBK -- ȸ�� -> ��ٱ���
-		FOREIGN KEY (
-			MEMNO -- ȸ����ȣ
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_SPBK -- 회원 -> 장바구니
+        FOREIGN KEY (
+            MEMNO -- 회원번호
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- �޽���
+-- 메시지
 ALTER TABLE INTR_MESSAGE
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_MESSAGE -- ȸ�� -> �޽���
-		FOREIGN KEY (
-			MEMNO -- �����1
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_MESSAGE -- 회원 -> 메시지
+        FOREIGN KEY (
+            MEMNO -- 사용자1
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
 
--- �޽���
+-- 메시지
 ALTER TABLE INTR_MESSAGE
-	ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_MESSAGE2 -- ȸ�� -> �޽���2
-		FOREIGN KEY (
-			MEMNO2 -- �����2
-		)
-		REFERENCES INTR_MEMBER ( -- ȸ��
-			MEMNO -- ȸ����ȣ
-		);
+    ADD CONSTRAINT FK_INTR_MEMBER_TO_INTR_MESSAGE2 -- 회원 -> 메시지2
+        FOREIGN KEY (
+            MEMNO2 -- 사용자2
+        )
+        REFERENCES INTR_MEMBER ( -- 회원
+            MEMNO -- 회원번호
+        );
