@@ -48,8 +48,8 @@ public class MemberController {
     }
     
     @RequestMapping("{id}")
-    public Member view(@PathVariable String id) throws Exception {
-        return memberService.get(id);
+    public Member view(@PathVariable int no) throws Exception {
+        return memberService.get(no);
     }
     
 }
