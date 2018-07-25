@@ -23,9 +23,9 @@ public class WorkshopController {
         this.workshopService = workshopService;
     }
     
-    @PostMapping("add")
+    @RequestMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(Workshop workshop) {
+    public void add(Workshop workshop) throws Exception {
         workshopService.add(workshop);
     }
     
