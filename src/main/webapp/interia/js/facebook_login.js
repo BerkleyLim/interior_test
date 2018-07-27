@@ -1,60 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>페이스북 로그인</h1>
-
-<style>
-.login_sns_login {
-    width: 300px;
-    height: 190px;
-    margin: 0 auto;
-}
-.login_sns_login button{
-    width: 300px;
-    height: 50px;
-    margin-bottom: 0.5em;
-    border: 0;
-    background-color: #ffc001;
-}
-
-/* 여기서는 버튼 이미지 구현하기 위한 css 적용론 */
-/* 카카오 톡 */
-#btn-kakao-login {
-}
-
-/* 페이스북 */
-#btn-facebook-login {
-    background: url(./facebook_login.png) no-repeat;
-}
-
-/* 구글 */
-#btn-google-login {
-}
-
-</style>
-
-    <div class="login_sns_login">
-        <button id="btn-kakao-login">카카오 로그인 버튼</button>
-        <fb:login-button id="btn-facebook-login" type="button" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-        <button id="btno-google-login">구글 로그인 버튼</button>
-    </div>
- <div
-    class="fb-login-button"
-    data-max-rows="1"
-    data-size="<medium, large>"
-    data-button-type="continue_with"
-    data-width="<100% or px>"
-    data-scope="<comma separated list of permissions, e.g. public_profile, email>"
->그래이드</div>
-<script type="text/javascript">
 // 로그인 성공한 후 서버에 자동으로 로그인 하기
 // => 페이스북으로부터 사용자 정보 가져오기 (페이스북으로부터 사용자 정보를 가져올 수 있도록 서버에 accessToken을 보낸다.)
 function autoServerLogin(accessToken) {
-    location.href = "login09.jsp?accessToken=" + accessToken;
+	// 페이스북으로 처음으로 로그인 했을 경우!
+	$.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
+		if (data.no < 1) {
+			// FB.api('서비스 URL', 서비스 결과를 받았을 때 호출될 함수);
+			// => '/me' : 현재 로그인 한 사용자의 정보를 가져오는 서비스이다.
+			var result = getUserInfo(accessToken);
+				console.log(result);
+//				no: response.authResponse.accessToken.id
+//				id: String(response.authResponse.accessToken.id),
+//				password: "-",
+//				name: response.authResponse.accessToken.name,
+//				nickname: response.authResponse.accessToken.name,
+//				phoneNumber: "-"
+			
+			//$.post(serverRoot + "/json/member/add", data);
+		    
+		}
+	});
+	// 이와 동일하게 로그인 실행
+//	$.post(serverRoot + "/json/auth/login", data, (result) => {
+//        if (result.state == "success") {
+//        	location.href = "../main/index.html";
+//        }
+//        else 
+//            window.alert("로그인 실패!");
+//    }, "json");
 }
 
 //로그인 성공한 후 사용자 정보 가져오기
@@ -70,17 +42,18 @@ function getUserInfo(accessToken) {
  // => '/me' : 현재 로그인 한 사용자의 정보를 가져오는 서비스이다.
  FB.api('/me?fields=id,name,email', function(response) {
      console.log(response);
+     //autoServerLogin(response.authResponse.accessToken);
  });
 }
 
 //페이스북 로그인을 수행한 후에 그 결과에 따라 작업을 수행한다.
 function statusChangeCallback(response) {
-  console.log(response);
+  //console.log(response);
 
   if (response.status === 'connected') { // 로그인이 정상적으로 되었을 때,
+	  //console.log(response.authResponse.accessToken)
       autoServerLogin(response.authResponse.accessToken);
 	  //getUserInfo(response.authResponse.accessToken); // 테스트용
-  
   } else { // 로그인이 되지 않았을 때,
       console.log("로그인 되지 않았음");
   }
@@ -91,6 +64,7 @@ function statusChangeCallback(response) {
 //=> 그 페이지에서 로그인을 수행한 후 onlogin에 등록한 코드가 실행된다.
 // 즉 checkLoginState() 함수가 실행된다.
 function checkLoginState() {
+	console.log("checkLoginState() 수행완료");
 	// 로그인 상태를 가져올 것을 요청한다.
     // => 그리고 로그인 정보를 가져 왔을 때 호출될 함수를 등록한다.
     FB.getLoginStatus(function(response) { 
@@ -119,19 +93,6 @@ window.fbAsyncInit = function() {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  // js.src 부분에 있는 appId=499179377189688 에서 숫자부분은 자신의 id 값으로 넣을 것
-  js.src = "https://connect.facebook.net/ko_KR/sdk.js";
+  js.src = "../../js/facebook_sdk.js";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-
-
-</script>
-</body>
-</html>
-
-
-
-
-
-
-

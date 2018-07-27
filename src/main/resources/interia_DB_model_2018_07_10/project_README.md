@@ -40,7 +40,7 @@
 <3> 작품TABLE - Works (WORKS)
 
 - PK _ 작품번호 - Work Number (WNO)
-- FK _ 공방번호 - Studio number (MEMNO)
+- FK _ 공방번호 - Workshop number (MEMNO)
 - 작품명 - Works Title (WTITL)
 - 판매가 - Price (PRICE)
 - 등록일 - Registration date (WRTDT)

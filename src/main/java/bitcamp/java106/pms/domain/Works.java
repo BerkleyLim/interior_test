@@ -6,8 +6,9 @@ import java.sql.Date;
 public class Works implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    private int no;
-    private String title;
+    private int no;  // 작품번호
+    private int wno;  // 공방번호
+    private String title; //작품번호
     private int price;
     private Date registeredDate;
     private int capacity;
