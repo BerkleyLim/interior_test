@@ -1,24 +1,25 @@
 // 로그인 성공한 후 서버에 자동으로 로그인 하기
 // => 페이스북으로부터 사용자 정보 가져오기 (페이스북으로부터 사용자 정보를 가져올 수 있도록 서버에 accessToken을 보낸다.)
 function autoServerLogin(accessToken) {
+	var result = getUserInfo(accessToken);
+//	console.log(result.userId);
 	// 페이스북으로 처음으로 로그인 했을 경우!
-	$.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
-		if (data.no < 1) {
-			// FB.api('서비스 URL', 서비스 결과를 받았을 때 호출될 함수);
-			// => '/me' : 현재 로그인 한 사용자의 정보를 가져오는 서비스이다.
-			var result = getUserInfo(accessToken);
-				console.log(result);
+//	$.getJSON(serverRoot + "/json/member/", (data) => {
+//		console.log(data.no);
+//		if (data.no < 1) {
+//			// FB.api('서비스 URL', 서비스 결과를 받았을 때 호출될 함수);
+//			// => '/me' : 현재 로그인 한 사용자의 정보를 가져오는 서비스이다.
 //				no: response.authResponse.accessToken.id
 //				id: String(response.authResponse.accessToken.id),
 //				password: "-",
 //				name: response.authResponse.accessToken.name,
 //				nickname: response.authResponse.accessToken.name,
 //				phoneNumber: "-"
-			
-			//$.post(serverRoot + "/json/member/add", data);
-		    
-		}
-	});
+//			
+//			//$.post(serverRoot + "/json/member/add", data);
+//		    
+//		}
+//	});
 	// 이와 동일하게 로그인 실행
 //	$.post(serverRoot + "/json/auth/login", data, (result) => {
 //        if (result.state == "success") {
