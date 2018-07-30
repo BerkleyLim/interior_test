@@ -11,6 +11,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^11.0.1",
     "@fortawesome/fontawesome-free": "^5.1.0",
+    "angularjs-social-login": "^2.6.1",
     "blueimp-file-upload": "^9.22.0",
     "bootstrap": "^4.1.1",
     "bxslider": "^4.2.13",
