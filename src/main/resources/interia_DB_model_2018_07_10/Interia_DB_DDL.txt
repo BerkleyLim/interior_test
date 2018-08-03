@@ -419,6 +419,7 @@ ALTER TABLE INTR_WKOT
 CREATE TABLE INTR_WPHO (
     WPNO INTEGER      NOT NULL COMMENT '사진번호', -- 사진번호
     WNO  INTEGER      NOT NULL COMMENT '작품번호', -- 작품번호
+    MIPT VARCHAR(1)   NOT NULL COMMENT '메인사진여부' -- 메인사진여부
     PATH VARCHAR(255) NULL     COMMENT '사진' -- 사진
 )
 COMMENT '작품사진';

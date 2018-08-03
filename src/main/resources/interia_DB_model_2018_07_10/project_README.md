@@ -55,6 +55,7 @@
 
 - PK _ 사진번호 - Photo Number (WPNO)
 - FK _ 작품번호 - Work Number (WNO)
+- 메인사진여부 - Main Photo (MIPT)
 - 사진 - PATH
 
 

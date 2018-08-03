@@ -5,8 +5,8 @@ INSERT INTO `INTR_WORKS`(`WNO`, `MEMNO`, `WTITL`, `PRICE`, `WRTDT`, `ALSTK`, `SL
 INSERT INTO `INTR_WORKS`(`WNO`, `MEMNO`, `WTITL`, `PRICE`, `WRTDT`, `ALSTK`, `SLST`, `PDDT`, `SPCS`, `PDRD`) VALUES ('','1','좌식의자5','65000','2018-07-10','12','판매중','제가 발주한 2개 중 2개 모두 아쉬운점이 있었어요..','N','NULL')
 
 
-INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`, `PATH`) VALUES ('','1','img02.png');
-INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`, `PATH`) VALUES ('','2','img03.png');
-INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`, `PATH`) VALUES ('','3','img04.png');
-INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`, `PATH`) VALUES ('','4','img05.png');
-INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`, `PATH`) VALUES ('','5','img06.png');
+INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`,`MIPT`, `PATH`) VALUES ('','1','Y','img02.png');
+INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`,`MIPT`, `PATH`) VALUES ('','2','Y','img03.png');
+INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`,`MIPT`, `PATH`) VALUES ('','3','Y','img04.png');
+INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`,`MIPT`, `PATH`) VALUES ('','4','Y','img05.png');
+INSERT INTO `INTR_WPHO`(`WPNO`, `WNO`,`MIPT`, `PATH`) VALUES ('','5','Y','img06.png');
