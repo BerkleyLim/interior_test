@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="./jquery.min.js"></script>
+<script src="./handlebars.min.js"></script>
+</head>
+<body>
+
+<script id="entry-template" type="text/x-handlebars-template">
+<table>
+    <thead> 
+        <th>이름</th> 
+        <th>아이디</th> 
+        <th>메일주소</th>
+        <th>요소정보</th>
+    </thead> 
+    <tbody> 
+        {{!-- {{#each users}} 는 {{#users}} 로도 대체 가능하다 --}}
+        {{#each users}}
+        <tr>
+            {{!-- {{name}} 은 {{this.name}} 과 같고 {{.}} 은 현재 name과 id를 포함하고 있는 오브젝트를 가리킨다 --}}
+            <td>{{name}}</td> 
+            <td>{{id}}</td> 
+            
+            {{!-- 사용자 정의 헬퍼인 email에 id를 인자로 넘긴다 --}}
+            <td><a href="mailto:{{email id}}">{{email id}}</a></td> 
+            
+            {{!-- 요소의 순번은 @index 혹은 @key로 잡을 수 있는데,
+            array와 object 모두 잡을 수 있는 key가 더 나아보인다 --}}
+            
+            {{#if @first}}
+                <td>첫 아이템 ({{@key}} 번째 요소)</td>
+            {{else if @last}}
+                <td>마지막 아이템 ({{@key}} 번째 요소)</td>
+            {{else}}
+                <td>중간 아이템 ({{@key}} 번째 요소)</td>
+            {{/if}}
+        </tr> 
+        {{/each}}
+    </tbody> 
+</table>
+</script>
+
+<h1>기본 제공 헬퍼</h1>
+1> if의 경우 오직 true/false만 판별 가능, 따라서 복잡한 조건은 핸들바를 통해 처리 불가<br>
+2> 사용자 정의 헬퍼를 추가해서 처리 가능하지만, 템플릿에 로직을 베제하는 사상과 배치되기 대문에 되도록 사용 자제 한다<br>
+3> 다음 예제에서는 핸들바에서 제공하는 거의 모든 기본 헬퍼가 다 포함되어 있다.<br>
+4> each 헬퍼는 배열 등 반복해서 표시할 수 있도록 해주고 #배열명으로 대체 가능<br>
+5> if는 아주 단순한 true/false만 판별 가능<br>
+6> else와 else if를 지원하고 unless 는 if의 반대되는 헬퍼<br>
+7> 헬퍼 내부에서 다시 헬퍼를 사용하는 것도 가능<br>
+
+<h3>each 헬퍼</h3>
+1> @ 기호와 함께 몇 번째 요소인지도 판별 가능, @first로 첫번째 요소 여부를 알구 있음<br>
+2> @last로 마지막 요소 여부를 알 수 있음<br>
+3> 해당 요소가 몇 번째 요소인지 or 오브젝트였으면 현재 어떤 맴버를 탐색 중인지 @key로 알 수 있음<br>
+
+
+<script>
+//핸들바 템플릿 가져오기
+var source = $("#entry-template").html(); 
+
+//핸들바 템플릿 컴파일
+var template = Handlebars.compile(source); 
+
+//핸들바 템플릿에 바인딩할 데이터
+var data = {
+        users: [
+            { name: "홍길동1", id: "aaa1" },
+            { name: "홍길동2", id: "aaa2" },
+            { name: "홍길동3", id: "aaa3" },
+            { name: "홍길동4", id: "aaa4" },
+            { name: "홍길동5", id: "aaa5" }
+        ]
+}; 
+
+//커스텀 헬퍼 등록 (id를 인자로 받아서 전체 이메일 주소를 반환)
+Handlebars.registerHelper('email', function (id) {
+  return id + "@daum.net";
+});
+
+//핸들바 템플릿에 데이터를 바인딩해서 HTML 생성
+var html = template(data);
+
+//생성된 HTML을 DOM에 주입
+$('body').append(html);
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
