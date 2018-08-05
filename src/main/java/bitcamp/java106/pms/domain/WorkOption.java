@@ -6,15 +6,26 @@ public class WorkOption implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private int opno; // 옵션번호
+    private int worksNumber;  // 작품번호
     private String optionYn; // 옵션 여부
     private String attributeValue; // 속성값
     private String attributeName; // 속성명
     
+    
+    
     @Override
     public String toString() {
-        return "WorkOption [opno=" + opno + ", optionYn=" + optionYn
-                + ", attributeValue=" + attributeValue + ", attributeName="
-                + attributeName + "]";
+        return "WorkOption [opno=" + opno + ", worksNumber=" + worksNumber
+                + ", optionYn=" + optionYn + ", attributeValue="
+                + attributeValue + ", attributeName=" + attributeName + "]";
+    }
+
+    public int getWorksNumber() {
+        return worksNumber;
+    }
+
+    public void setWorksNumber(int worksNumber) {
+        this.worksNumber = worksNumber;
     }
 
     public String getOptionYn() {
@@ -25,6 +36,7 @@ public class WorkOption implements Serializable {
         this.optionYn = optionYn;
     }
 
+    
     public int getOpno() {
         return opno;
     }

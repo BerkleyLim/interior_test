@@ -18,7 +18,7 @@ public class Works implements Serializable {
     private boolean deliveryPrice; // 배송비 여부
     private String requestDetail; // 의뢰 내용
     private WorksPhoto photo;  // 사진 관련
-    private List<WorkOption> option; // 제품 옵션 관련
+    private WorkOption option; // 제품 옵션 관련
     
     
     @Override
@@ -29,11 +29,6 @@ public class Works implements Serializable {
                 + ", productDetail=" + productDetail + ", deliveryPrice="
                 + deliveryPrice + ", requestDetail=" + requestDetail
                 + ", photo=" + photo + ", option=" + option + "]";
-    }
-
-
-    public void setOption(List<WorkOption> option) {
-        this.option = option;
     }
 
 
@@ -146,6 +141,24 @@ public class Works implements Serializable {
         this.photo = photo;
     }
 
+
+    public WorkOption getOption() {
+        return option;
+    }
+
+
+    public void setOption(WorkOption option) {
+        this.option = option;
+    }
+
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+    
+    
+    
+    
     
     
 }

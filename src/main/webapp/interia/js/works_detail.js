@@ -1,36 +1,37 @@
 // 제품 판매 관련 값 변경하기
+
+// => 제품번호 추출
 var no = location.href.split("?")[1];
 
-
-// 1. 이미지 부분은 나중에 건들겠음
-
-// 밑에서부터 시작!
 $.getJSON(serverRoot + "/json/works/" + no, (result) => {
+	// 1) 제목 수정
 	var title = result.title;
-	var price = result.price;
-	
 	$("#fTitle").text(title);
-	$("#fPrice").text(price);
-	$("#fDeliveryPrice").text("2500");
+	$("#fTitle2").text(title);
 	
+	// 2) 가격 수정 - 초기화
+	var price = result.price;
+	$("#fPrice").text(price);
+	
+	// 3) 택배비 수정
 	// 배송비 저장
 	var deliveryPrice = 2500;
-	$("#fTitle2").text(result.title);
+	$("#fDeliveryPrice").text("2500");
 	
-	// 재고 설정
+	// 4) 구매 개수 설정 (초기화 : 1)
 	var maxCapacity = result.capacity;
 	$("#seller-value").text(1);
 	$("#seller-value").val(1);
 	var sellerValue = $("#seller-value").text();
 	
-	// 재고의 따른 가격
+	// 5) 재고의 따른 가격 설정
 	$("#price-value").text(price * $("#seller-value").text());
 	
-	// 총 상품 금액
+	// 6) 총 상품 금액
 	$("#All-Price").text((sellerValue * price) + deliveryPrice);
 	$("#All-Price").val((sellerValue * price) + deliveryPrice);
 	
-	// 구매 갯수 증가 이벤트
+	// 7) 구매 갯수 증가 이벤트
 	$("#plus-value").click(() => {
 		if (sellerValue == maxCapacity) {
 			window.alert("더이상의 재고 수량이 존재하지 않습니다.");
@@ -42,7 +43,7 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 		}
 	});
 	
-	// 구매 갯수 감소 이벤트
+	// 8) 구매 갯수 감소 이벤트
 	$("#minus-value").click(() => {
 		if (sellerValue == 1) {
 			window.alert("최소 1개 이상을 지정해야합니다.");
@@ -54,12 +55,20 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 		}
 	});
 	
-	//console.log(result);
-	
 	// 메인만 이미지 표시 (임시로 테스트용으로 둔 것!)
-	$("#main-image").attr("src","../../images/works/works_list/" + result.photo.path);
+	//$("#main-image").attr("src","../../images/works/works_list/" + result.photo.path);
+	$("#main-image").attr("src","../../images/works/works_list/" + {
+		if (result.photo.)
+		result.photo.path
+	});
 	
 	
+	// 장바구니 담기 구현
+	
+	// 구매하기 버튼 구현
+	$("#btn-purchased").click(() => {
+		$.getJSON()
+	});
 	
 	// 핸들러 제어
     var trTemplateSrc=$('#tr-template').html();
