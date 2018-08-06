@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import bitcamp.java106.pms.dao.WkacpDao;
 import bitcamp.java106.pms.dao.WsavDao;
 import bitcamp.java106.pms.domain.Wkacp;
+import bitcamp.java106.pms.domain.Workshop;
 import bitcamp.java106.pms.domain.Wsav;
 import bitcamp.java106.pms.service.WsavService;
 
@@ -36,7 +37,15 @@ public class WsavServiceImpl implements WsavService {
     
     @Override
     public Wsav get(int no) {
-        return wsavDao.selectOne(no);
+        System.out.println(no);
+        Wsav wsav = wsavDao.selectOne(no);
+        
+        ArrayList<Wkacp> myPhotos = (ArrayList<Wkacp>)wkacpDao.selectList(no);
+        
+        wsav.setWorkshopPhoto(myPhotos);
+        
+        
+        return wsav;
     }
     
     @Override
@@ -53,8 +62,17 @@ public class WsavServiceImpl implements WsavService {
     }
     
     @Override
-    public int update(Wsav wsav) {
+    public int update(Wsav wsav, ArrayList<Wkacp> activityphotos) {
+       int workshopActivityNo =  wsav.getNo();
+        wkacpDao.delete(workshopActivityNo);
+        for(int i = 0; i < activityphotos.size(); i++) {
+            Wkacp wkacp = activityphotos.get(i);
+            wkacp.setWorkshopActivityNo(workshopActivityNo);
+            wkacpDao.insert(wkacp);
+        }
+        
         return wsavDao.update(wsav);
+        
     }
     
     @Override
@@ -63,6 +81,12 @@ public class WsavServiceImpl implements WsavService {
         params.put("memno", no);
         params.put("wsano", wsano);
         return wsavDao.delete(params);
+    }
+
+    @Override
+    public int adminDelete(int wsano) {
+        wkacpDao.delete(wsano);
+        return wsavDao.adminDelete(wsano);
     }
 }
 

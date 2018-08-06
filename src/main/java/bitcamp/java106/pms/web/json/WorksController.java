@@ -53,6 +53,17 @@ public class WorksController {
         return worksService.getWorksPhotoOption(worksNumber);
     }
     
+    //관리자 판매작품List 
+    @RequestMapping("adminList") 
+    public Object adminList(int no) {
+        return worksService.adminList(no);
+    }
+    
+    @RequestMapping("currentState") 
+    public Object getCurrentState(@RequestParam("no") int no) {
+        return worksService.getCurrentState(no);
+    }
+    
     // 옵션보기
 //    @RequestMapping("option/{no}")
 //    public WorkOption viewOption(

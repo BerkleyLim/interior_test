@@ -12,11 +12,11 @@ public class Works implements Serializable {
     private String title; //작품명
     private int price; // 가격  
     private Date registeredDate; // 등록 날짜
+    private Date modifiedDate; // 수정일자
     private int capacity; // 재고수량
     private String salesStatus; // 판매 상태
     private String productDetail; // 제품 상세
     private String deliveryPrice; // 배송비 여부
-    private String requestDetail; // 의뢰 내용
     private WorksPhoto photo;  // 사진 관련
     private WorksOption option; // 제품 옵션 관련
     
@@ -25,10 +25,10 @@ public class Works implements Serializable {
     public String toString() {
         return "Works [worksNumber=" + worksNumber + ", workshopNumber="
                 + workshopNumber + ", title=" + title + ", price=" + price
-                + ", registeredDate=" + registeredDate + ", capacity="
-                + capacity + ", salesStatus=" + salesStatus + ", productDetail="
-                + productDetail + ", deliveryPrice=" + deliveryPrice
-                + ", requestDetail=" + requestDetail + ", photo=" + photo
+                + ", registeredDate=" + registeredDate + ", modifiedDate="
+                + modifiedDate + ", capacity=" + capacity + ", salesStatus="
+                + salesStatus + ", productDetail=" + productDetail
+                + ", deliveryPrice=" + deliveryPrice + ", photo=" + photo
                 + ", option=" + option + "]";
     }
 
@@ -128,14 +128,22 @@ public class Works implements Serializable {
     }
 
 
-    public String getRequestDetail() {
-        return requestDetail;
+    public Date getModifiedDate() {
+        return modifiedDate;
     }
 
 
-    public void setRequestDetail(String requestDetail) {
-        this.requestDetail = requestDetail;
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
+
+
+
+    public void setWorksNumber(int worksNumber) {
+        this.worksNumber = worksNumber;
+    }
+
 
 
     public WorksPhoto getPhoto() {
