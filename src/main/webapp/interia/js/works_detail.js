@@ -57,27 +57,27 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 	
 	// 메인만 이미지 표시 (임시로 테스트용으로 둔 것!)
 	//$("#main-image").attr("src","../../images/works/works_list/" + result.photo.path);
-	$("#main-image").attr("src","../../images/works/works_list/" + {
-		if (result.photo.)
-		result.photo.path
-	});
+//	$("#main-image").attr("src","../../images/works/works_list/" + {
+//		if (result.photo.)
+//		result.photo.path
+//	});
 	
 	
 	// 장바구니 담기 구현
 	
 	// 구매하기 버튼 구현
 	$("#btn-purchased").click(() => {
-		$.getJSON()
+		//$.getJSON()
 	});
 	
 	// 핸들러 제어
-    var trTemplateSrc=$('#tr-template').html();
-    
-    // 위에서 준비한 템플릿 데이터를 가지고 HTML을 생성할 템플릿 엔진 준비
-    var templateFn = Handlebars.compile(trTemplateSrc)
-    
-    $.getJSON("../../../json/works/option/" + no , (data) => {
-        console.log(data);
-        $(fAttributeValue).html(templateFn({select:data}))
-    });
+//    var trTemplateSrc=$('#tr-template').html();
+//    
+//    // 위에서 준비한 템플릿 데이터를 가지고 HTML을 생성할 템플릿 엔진 준비
+//    var templateFn = Handlebars.compile(trTemplateSrc)
+//    
+//    $.getJSON("../../../json/works/option/" + no , (data) => {
+//        console.log(data);
+//        $(fAttributeValue).html(templateFn({select:data}))
+//    });
 });

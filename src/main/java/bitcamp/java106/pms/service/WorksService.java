@@ -3,7 +3,7 @@ package bitcamp.java106.pms.service;
 
 import java.util.List;
 
-import bitcamp.java106.pms.domain.WorkOption;
+import bitcamp.java106.pms.domain.WorksOption;
 import bitcamp.java106.pms.domain.Works;
 
 public interface WorksService {
@@ -14,8 +14,8 @@ public interface WorksService {
     int add(Works works);
     int update(Works works);
     int delete(int no);
-    WorkOption OptionValue(int no);
     List<Works> listWithHashtag(String hashtag);
+    Object getWorksPhotoOption(int worksNumber); // 작품, 옵션, 사진 가져오는 메소드
 }
 
 //ver 53 - 인터페이스 추가

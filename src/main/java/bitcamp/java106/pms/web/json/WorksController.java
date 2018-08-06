@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import bitcamp.java106.pms.domain.WorkOption;
+import bitcamp.java106.pms.domain.WorksOption;
 import bitcamp.java106.pms.domain.Works;
 import bitcamp.java106.pms.service.WorksService;
 
@@ -48,18 +48,18 @@ public class WorksController {
     }
     
     // 여기는 상세 보기용
-    @RequestMapping("{no}")
-    public Works view(@PathVariable int no) throws Exception {
-        return worksService.get(no);
+    @RequestMapping("{worksNumber}")
+    public Object view(@PathVariable int worksNumber) throws Exception {
+        return worksService.getWorksPhotoOption(worksNumber);
     }
     
     // 옵션보기
-    @RequestMapping("option/{no}")
-    public WorkOption viewOption(
-            @PathVariable int no) {
-        System.out.println("worksControllor() 정상처리");
-        return worksService.OptionValue(no);
-    }
+//    @RequestMapping("option/{no}")
+//    public WorkOption viewOption(
+//            @PathVariable int no) {
+//        System.out.println("worksControllor() 정상처리");
+//        return worksService.OptionValue(no);
+//    }
 
 }
 

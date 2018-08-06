@@ -7,49 +7,55 @@ import java.util.List;
 public class Works implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    private int no;  // 작품번호
-    private int wno;  // 공방번호
+    private int worksNumber;  // 작품번호
+    private int workshopNumber;  // 공방번호
     private String title; //작품명
     private int price; // 가격  
     private Date registeredDate; // 등록 날짜
     private int capacity; // 재고수량
     private String salesStatus; // 판매 상태
     private String productDetail; // 제품 상세
-    private boolean deliveryPrice; // 배송비 여부
+    private String deliveryPrice; // 배송비 여부
     private String requestDetail; // 의뢰 내용
     private WorksPhoto photo;  // 사진 관련
-    private WorkOption option; // 제품 옵션 관련
+    private WorksOption option; // 제품 옵션 관련
     
     
     @Override
     public String toString() {
-        return "Works [no=" + no + ", wno=" + wno + ", title=" + title
-                + ", price=" + price + ", registeredDate=" + registeredDate
-                + ", capacity=" + capacity + ", salesStatus=" + salesStatus
-                + ", productDetail=" + productDetail + ", deliveryPrice="
-                + deliveryPrice + ", requestDetail=" + requestDetail
-                + ", photo=" + photo + ", option=" + option + "]";
+        return "Works [worksNumber=" + worksNumber + ", workshopNumber="
+                + workshopNumber + ", title=" + title + ", price=" + price
+                + ", registeredDate=" + registeredDate + ", capacity="
+                + capacity + ", salesStatus=" + salesStatus + ", productDetail="
+                + productDetail + ", deliveryPrice=" + deliveryPrice
+                + ", requestDetail=" + requestDetail + ", photo=" + photo
+                + ", option=" + option + "]";
     }
 
 
-    public int getNo() {
-        return no;
+
+    public int getWorksNumber() {
+        return worksNumber;
     }
 
 
-    public void setNo(int no) {
-        this.no = no;
+
+    public void setWorkNumber(int worksNumber) {
+        this.worksNumber = worksNumber;
     }
 
 
-    public int getWno() {
-        return wno;
+
+    public int getWorkshopNumber() {
+        return workshopNumber;
     }
 
 
-    public void setWno(int wno) {
-        this.wno = wno;
+
+    public void setWorkshopNumber(int workshopNumber) {
+        this.workshopNumber = workshopNumber;
     }
+
 
 
     public String getTitle() {
@@ -112,12 +118,12 @@ public class Works implements Serializable {
     }
 
 
-    public boolean isDeliveryPrice() {
+    public String isDeliveryPrice() {
         return deliveryPrice;
     }
 
 
-    public void setDeliveryPrice(boolean deliveryPrice) {
+    public void setDeliveryPrice(String deliveryPrice) {
         this.deliveryPrice = deliveryPrice;
     }
 
@@ -142,12 +148,12 @@ public class Works implements Serializable {
     }
 
 
-    public WorkOption getOption() {
+    public WorksOption getOption() {
         return option;
     }
 
 
-    public void setOption(WorkOption option) {
+    public void setOption(WorksOption option) {
         this.option = option;
     }
 
