@@ -108,6 +108,12 @@
     from INTR_WORKS where MEMNO = #{value}
   </select>
   
+  
+  <!-- 장바구니 담기 -->
+  <insert id="insertBuscket" parameterType="map">
+    insert into INTR_SPBK(wno, memno) 
+    values(#{worksNumber},#{memberNumber})
+  </insert>
 </mapper>
 
 

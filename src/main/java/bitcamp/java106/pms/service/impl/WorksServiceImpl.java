@@ -83,13 +83,24 @@ public class WorksServiceImpl implements WorksService {
         params.put("capacity", works.getCapacity());
         params.put("salesStatus", works.getSalesStatus());
         params.put("productDetail", works.getProductDetail());
-        params.put("deliveryPrice", works.isDeliveryPrice());
+        params.put("deliveryPrice", works.getDeliveryPrice());
         params.put("modifiedDate", works.getModifiedDate());
         
         params.put("worksOption", worksOption);
         params.put("worksPhoto", worksPhoto);
         
-        return params;
+        System.out.println(worksOption);
+        System.out.println(worksPhoto);
+        return params; 
+    }
+    
+    // 장바구니 담기
+    @Override
+    public int addBuscket(int worksNumber, int memberNumber) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("worksNumber", worksNumber);
+        params.put("memberNumber", memberNumber);
+        return worksDao.insertBuscket(params);
     }
     
     @Override

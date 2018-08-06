@@ -42,36 +42,39 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 		if (sellerValue == maxCapacity) {
 			window.alert("더이상의 재고 수량이 존재하지 않습니다.");
 		} else {
-			$("#seller-value").text(sellerValue++);
-			$("#price-value").text(price * $("#seller-value").text());
-			$("#All-Price").text((sellerValue * price) + deliveryPrice);
-			$("#All-Price").val((sellerValue * price) + deliveryPrice);
+			$("#seller-value").text(++sellerValue);
+			$("#price-value").text(result.price * sellerValue);
+			$("#All-Price").text((sellerValue * result.price) + deliveryPrice);
+			$("#All-Price").val((sellerValue * result.price) + deliveryPrice);
 		}
 	});
 	
 	// 8) 구매 갯수 감소 이벤트
 	$("#minus-value").click(() => {
-		if (sellerValue == 0) {
+		if (sellerValue == 1) {
 			window.alert("최소 1개 이상을 지정해야합니다.");
 		} else {
-			$("#seller-value").text(sellerValue--);
-			$("#price-value").text(price * $("#seller-value").text());
-			$("#All-Price").text((sellerValue * price) + deliveryPrice);
-			$("#All-Price").val((sellerValue * price) + deliveryPrice);
+			$("#seller-value").text(--sellerValue);
+			$("#price-value").text(result.price * sellerValue);
+			$("#All-Price").text((sellerValue * result.price) + deliveryPrice);
+			$("#All-Price").val((sellerValue * result.price) + deliveryPrice);
 		}
 	});
 	
-	// 메인만 이미지 표시 (임시로 테스트용으로 둔 것!)
-	//$("#main-image").attr("src","../../images/works/works_list/" + result.photo.path);
-//	var mainPhoto = null;
-	console.log(result.worksPhoto);
-//	if (result.worksPhoto.mainPhoto == "y" 
-//		|| result.worksPhoto.mainPhoto == "Y") {
-//		mainPhoto = result.photo.path;
-//		break;
-//	}
-//	$("#main-image").attr("src","../../images/works/works_list/" + mainPhoto);
+	// 메인만 이미지 표시
+	var mainPhoto = "";
+	for (var index in result.worksPhoto) {
+		//console.log(result.worksPhoto[index].mainPhoto);
+		if(result.worksPhoto[index].mainPhoto == "y" 
+			|| result.worksPhoto[index].mainPhoto == "Y") {
+			mainPhoto = result.worksPhoto[index].path;
+			break;
+		}
+	}
+	$("#main-image").attr("src","../../images/works/works_list/" + mainPhoto);
 	
+	
+	// 나머지 이미지
 	
 	
 	// 핸들러 제어 - 옵션 속성 값
@@ -81,12 +84,27 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 	// 핸들러 제어 - 옵션 속성 이름
 	templateFn = Handlebars.compile($('#AttributeName-template').html())
 	$(fAttributeName).html(templateFn({select:result.worksOption}))
+	
+	
 
 	// 장바구니 담기 구현
+	$("#btn-basket").click(() => {
+		$.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
+			window.alert("해당 제품을 장바구니에 담았습니다.")
+			$.post(serverRoot + "/json/works/add/buscket", {
+				worksNumber : result.worksNumber,
+				memberNumber : data.no
+			}, () => { 
+				location.href = serverRoot + "/interia/html/works/sp_bascket.html" 
+				}, 'json');
+		}).fail(() => {
+			location.href = serverRoot + "/interia/html/auth/login.html";
+		}); 
+	});
 	
 	// 구매하기 버튼 구현
 	$("#btn-purchased").click(() => {
-		//$.getJSON()
+	
 	});
 	
 });

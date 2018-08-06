@@ -37,9 +37,10 @@
 		</div>
 	</div>
 
+<!--  여기서부터 핸들바 적용 -->
 	<div class="ib-container">
-		<div class="sp-sb-list">
-			<div class="sp-sb-list-store">
+		<div class="sp-sb-list" id="basket-list">
+			<!-- <div class="sp-sb-list-store">
 				<div class="sp-sb-sname">
 					<p>가게명</p>
 				</div>
@@ -53,9 +54,6 @@
 						</div>
 					</div>
 					<div class="sp-sb-info">
-						<div class="sp-sb-info-name">
-							<p>비트공방</p>
-						</div>
 						<div class="sp-sb-info-product">
 							<p>Flence side Table_2color</p>
 						</div>
@@ -95,9 +93,6 @@
 						</div>
 					</div>
 					<div class="sp-sb-info">
-						<div class="sp-sb-info-name">
-							<p>비트공방</p>
-						</div>
 						<div class="sp-sb-info-product">
 							<p>Flence side Table_2color</p>
 						</div>
@@ -380,7 +375,7 @@
 					<i class="fas fa-equals"></i>
 					<p>&ensp;&ensp;&ensp;총 주문 금액 318,000 원</p>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="sp-sb-totalprice">
 			<div id="sp-sb-order" class="sp-sb-order">
@@ -406,12 +401,69 @@
 			</div>
 		</div>
 	</div>
-
+	
+    <script id="basket-template" type="text/x-handlebars-template">
+        {{#each basket}}
+            <div class="sp-sb-list-store">
+                <div class="sp-sb-sname">
+                    <p>가게명</p>
+                </div>
+                {{#each product}}
+                <div class="sp-sb-sproduct" id="basket-list-detail">
+                    <div class="sp-sb-check">
+                        <input type="checkbox" style="width: 20px; height: 20px;">
+                    </div>
+                    <div class="sp-sb-img">
+                        <div class="sp-sb-putimg">
+                            <img src="../../images/works/shopping_basket/sample_product.jpg" />
+                        </div>
+                    </div>
+                    <div class="sp-sb-info">
+                        <div class="sp-sb-info-product">
+                            <p>Flence side Table_2color</p>
+                        </div>
+                        <div class="sp-sb-info-option">
+                            <p>블랙</p>
+                        </div>
+                        <div class="sp-sb-info-delivery">
+                            <p>무료배송&ensp;|&ensp;일반택배배송</p>
+                        </div>
+                    </div>
+                    <div class="sp-sb-qty">
+                        <div class="sp-sb-qty-wrap">
+                            <div class="sp-sb-qty-btn-wrap">
+                                <button class="sp-sb-qty-minus">
+                                    <i class="far fa-minus-square"></i>
+                                </button>
+                            </div>
+                            <input class="item_qty_count" type="text" maxlength="3" value="1">
+                            <div class="sp-sb-qty-btn-wrap">
+                                <button class="sp-sb-qty-plus">
+                                    <i class="far fa-plus-square"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sp-sb-productprice">
+                        <p>15,900 원</p>
+                    </div>
+                </div>
+                <div class="sp-sb-sprice">
+                    <p>총 상품 가격 318,000 원&ensp;&ensp;&ensp;</p>
+                    <i class="fas fa-plus-circle"></i>
+                    <p>&ensp;&ensp;&ensp;배송비 0 원&ensp;&ensp;&ensp;</p>
+                    <i class="fas fa-equals"></i>
+                    <p>&ensp;&ensp;&ensp;총 주문 금액 318,000 원</p>
+                </div>
+                {{/each}}
+            </div>
+        {{/each}}
+    </script>
 
 	<footer id="footer"> </footer>
 	<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="../../js/common.js"></script>
-	<script src="../../js/sp_basket.js"></script>
+	<script src="../../js/sp_bascket.js"></script>
 	<script src="../../js/header.js"></script>
 	<script src="../../js/footer.js"></script>
 </body>
