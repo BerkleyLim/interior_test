@@ -3,7 +3,6 @@ package bitcamp.java106.pms.service;
 
 import java.util.List;
 
-import bitcamp.java106.pms.domain.WorksOption;
 import bitcamp.java106.pms.domain.Works;
 
 public interface WorksService {
@@ -11,14 +10,16 @@ public interface WorksService {
     // 업무 용어를 사용하라!
     List<Works> list();
     Works get(int no);
-    int add(Works works);
+    void add(Works works);
     int update(Works works);
     int delete(int no);
     List<Works> listWithHashtag(String hashtag);
     Object getWorksPhotoOption(int worksNumber); // 작품, 옵션, 사진 가져오는 메소드
     List<Works> adminList(int no);
     Object getCurrentState(int no); 
-    int addBuscket(int worksNumber, int memberNumber); // 여기는 장바구니 담는 용도
+    int addBuscket(int worksNumber, int memberNumber, int optionNumber); // 여기는 장바구니 담는 용도
+    List<Object> getBuscketList(int buyerNumber); // 여기는 해당 공방 안에 있는 각 장바구니의 제품을 출력
+    List<Object> viewBuscketWorkshopList(int buyerNumber); // 장바구니안에 있는 공방명 출력
 }
 
 //ver 53 - 인터페이스 추가

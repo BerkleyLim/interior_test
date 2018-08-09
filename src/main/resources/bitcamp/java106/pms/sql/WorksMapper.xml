@@ -56,8 +56,9 @@
   <!-- 제품 등록 -->
   <insert id="insert" parameterType="Works"
           useGeneratedKeys="true" keyColumn="wno" keyProperty="no">
-<!--     insert into pms2_board(titl,cont,cdt) 
-    values(#{title},#{content},now()) -->
+        INSERT INTO `INTR_WORKS`
+        (`MEMNO`, `WTITL`, `PRICE`, `WRTDT`, `ALSTK`, `SLST`, `PDDT`, `SPCS`) 
+        VALUES (#{workshopNumber},#{title},#{price},now(),#{capacity},#{salesStatus},#{productDetail},#{deliveryPrice})
   </insert>
   
   
@@ -111,9 +112,31 @@
   
   <!-- 장바구니 담기 -->
   <insert id="insertBuscket" parameterType="map">
-    insert into INTR_SPBK(wno, memno) 
-    values(#{worksNumber},#{memberNumber})
+    insert into INTR_SPBK(wno, memno, opno) 
+    values(#{worksNumber},#{memberNumber},#{optionNumber})
   </insert>
+  
+  <!-- 장바구니 리스트 - 공방안에 담긴 제품 목록 -->
+  <select id="selectBuscketList" resultType="map" parameterType="int">
+    select sb.memno as buyerNumber, w.wno as worksNumber, ws.wsnm as studioName,
+           wp.path as path, w.wtitl as title, wo.optyn as optionYn, 
+           wo.abvl as attributeValue, w.spcs as deliveryPrice, 
+           w.alstk as capacity, w.price as price
+    from INTR_SPBK sb 
+    inner join INTR_WORKS w on sb.wno = w.wno
+    inner join INTR_WPHO wp on sb.wno = wp.wno 
+    inner join INTR_WRKSHP ws on w.memno = ws.memno
+    inner join INTR_WKOT wo on sb.opno = wo.opno
+    where sb.memno=#{buyerNumber} and wp.mipt="y"
+  </select>
+  
+  <!-- 장바구니 리스트 - 공방명 찾기모드 -->
+  <select id="searchBuscketWorkshop" resultType="map" parameterType="int">
+    select distinct ws.memno as workshopNumber, ws.wsnm as studioName from INTR_SPBK sb
+    inner join INTR_WORKS w on sb.wno = w.wno
+    inner join INTR_WRKSHP ws on w.memno = ws.memno
+    where sb.memno=#{buyerNumber}
+  </select>
 </mapper>
 
 
