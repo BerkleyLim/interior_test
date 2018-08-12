@@ -5,10 +5,11 @@ $.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
 	// 핸들바 템플릿 컴파일(전체 리스트용)
 	var templateFnWorkshopList = Handlebars.compile(sourceWorkshopList);
 	
-	
+	// 먼저 공방제목 찾기
 	$.getJSON(serverRoot + "/json/works/buscketWorkshop/",
 			(workshopData) => {
 			
+			// 다음으로 공방별 제품 찾기
 			$.getJSON(serverRoot + "/json/works/buscketList/", (productData) => {
 				
 				// 먼저 공방의 대해 출력
@@ -16,8 +17,7 @@ $.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
 				
 				// 핸들바 템플릿(제품용)
 				var sourceProduct = $("#product-template").html()
-
-				console.log(productData);
+				
 				// 핸들바 템플리 컴파일(제품용)
 				var templateFnProduct = Handlebars.compile(sourceProduct);
 				
@@ -29,26 +29,39 @@ $.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
 					var x = 0;
 					for (var i = 0; i < productData.length; i++) {
 						if (workshopTitle == productData[i].studioName) {
-							products[x++] = productData[i];
+							products[x] = productData[i];
+							
+							// 택배비 여부 검사, 참이면 : 일반택배배송, 거짓이면 : 무료배송
+							if (productData[i].deliveryPrice == "y" || productData[i].deliveryPrice == "Y") {
+								products[x].resultDelivery ="일반택배배송";
+							} else {
+								products[x].resultDelivery ="무료배송";
+							}
+							console.log(products[x]);
+							x++;
 						}
 					}
 					$("#bascket-list-detail" + workshopData[j].workshopNumber).html(templateFnProduct({product:products}))
-					x =0;
 				}
 				
-				
+				$("#submit-purchase").click(() => {
+					
+					
+					$.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
+						location.href='sp_purchase.html';
+					}).fail(() => {
+						window.alert("로그인 하시기 바랍니다.");
+						location.href = serverRoot + "/interia/html/auth/login.html";
+					}); 
+				})
 			});
+
+
 		
 	});
-	
-	
-	// 질문 사항,
-	// 1) handlebars에서 css 안먹히는지,
-	// 2) 리스트에서 반복 작업시 같은 ID가 여러개 나오는데, 여기서 같은 ID는 JQuery로 이용하여 불가능한지의 대해
-	
-
 }).fail(() => {
 	location.href = serverRoot + "/interia/html/auth/login.html";
 }); 
+
 
 

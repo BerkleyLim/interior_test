@@ -1,6 +1,7 @@
 // 업무로직 구현체 - 고객사 마다 다른 구현을 할 수 있다.
 package bitcamp.java106.pms.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,8 +44,23 @@ public class WorksServiceImpl implements WorksService {
     }
     
     @Override
-    public void add(Works works) {
-        //return worksDao.insert(works);
+    public void add(Works works, ArrayList<WorksPhoto> worksPhotos) {
+        worksDao.insert(works);
+        
+        int worksNo =  worksDao.selectRecent().getWorksNumber();
+               
+        for(int i = 0; i < worksPhotos.size(); i++) {
+           
+           WorksPhoto worksPhoto = worksPhotos.get(i);
+           if(i == 1) {
+               worksPhoto.setMainPhoto("Y");
+           }
+           worksPhoto.setWorksNumber(worksNo);
+           worksPhotoDao.insert(worksPhoto);
+        }
+        
+        
+     
     }
     
     @Override

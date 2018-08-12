@@ -69,7 +69,7 @@ public class AuthController {
             if (member == null) { // 등록된 회원이 아니면,
                 // 페이스북에서 받은 정보로 회원을 자동 등록한다.
                 member = new Member();
-                member.setId((String)userInfo.get("id"));
+                member.setId((String)userInfo.get("id") + "@facebook.com");
                 member.setName((String)userInfo.get("name"));
                 member.setPassword("1111");
                 member.setNickname((String)userInfo.get("name"));

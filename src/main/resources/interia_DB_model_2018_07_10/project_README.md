@@ -13,6 +13,8 @@
 - 우편번호 - ZIP CODE (ZCODE)
 - 기본주소 - Base Address (BADDR)
 - 상세주소 - Detailed Address (DADDR)
+- 프로필사진 - (MPPHO)
+- 배너사진 - (MBPHO)
 
 
 <2> 주문 TABLE - ORDER
@@ -187,26 +189,6 @@
 - FK _ 회원번호 - Member Number (MEMNO)
 - 댓글내용 - Comment Content (CMCTT)
 - 댓글게시일자 - Comment Registration Date (CRTDT)
-
-
-<19> 메시지 TABLE - MESSAGE
-- PK _ 메시지번호 - Message Number (MSNO)
-- FK _ 사용자1 - Member Number (MENNO)
-- FK _ 사용자2 - Member Number2 (MENNO2)
-- 내용 - Message Content (MSCTT)
-- 메시지방향 - Message Direction (MSDIR)
-- 날짜 - Message Date (MDATE)
-
-
-<20> 스크랩(판매작품) TABLE - Scrap Sale works (SPSW)
-
-- PK(FK) _ 작품번호 - Work Number (WNO)
-- PK(FK) _ 회원번호 - Member Number (MEMNO)
-
-
-<21> 스크랩(공방) TABLE - Scrap Studio (SPSTUD)
-- PK(FK) _ 작품번호 - Work Number (WNO)
-- PK(FK) _ 회원번호 - Member Number (MNO)
 
 
 <22> 해시태그 TABLE - HASHTAG
