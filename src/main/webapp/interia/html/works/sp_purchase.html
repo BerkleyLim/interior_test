@@ -39,10 +39,10 @@
                 <!-- id 부분은 나중에 DB 용으로 남겨두었다. -->
                 <div class="form-group">
                     <table class="table sp-table-sub">
-                        <thead id="workshop-template" style="background:#eee;">
+                        <thead id="workshop-list" style="background:#eee;">
                             <!-- 핸들바 처리 - 공방부분 -->
                         </thead>
-                        <tbody id="works-template">
+                        <tbody id="works-list">
                             <!-- 핸들바 처리 - 공방에 해당하는 작품 부분 -->
                         </tbody>
                     </table>
@@ -66,16 +66,16 @@
                         </div>
                         <div class="sp-product-store col-sm-7">
                             <!--차후에 조건문 추가할 것! width 길이의 따라 줄바꿈 실행 하도록!! -->
-                            [{{studioName}}] {{title}}<br> {{attributeValue}}
+                            [{{studioName}}] {{title}}<br> {{optionValue}}
                         </div>
                         <div class="sp-price-store col-sm-4">
-                            <span>{{price}}</span> 원 | 수량 : 1
+                            <span>{{priceValue}}</span> 원 | 수량 : {{buyValue}}
                         </div>
                     </div>
                 </td>
                 <td class="sp-table-right" style="vertical-align: middle; text-align: center">선결제<br>
                     {{!-- 배송비 --}}
-                    <span>{{}}</span>원
+                    <span>{{resultDelivery}}</span>원
                 </td>
             </tr>
         {{/each}}
@@ -215,6 +215,7 @@
     <script src="../../js/common.js"></script>
     <script src="../../js/header.js"></script>
     <script src="../../js/footer.js"></script>
+    <script src="../../js/sp_purchase.js"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     
     <script>
@@ -237,6 +238,10 @@
                 msg += '상점 거래ID : ' + rsp.merchant_uid;
                 msg += '결제 금액 : ' + rsp.paid_amount;
                 msg += '카드 승인번호 : ' + rsp.apply_num;
+                
+                // 여기서 주문 관련 DB에 포함시킨다.
+                $.Post(serverRoot + "/json/order/purchasedForm");
+                
                 //location.href = "../main/index.html";
             } else {
                 var msg = '결제에 실패하였습니다.';

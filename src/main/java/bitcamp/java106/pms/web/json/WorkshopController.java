@@ -47,6 +47,12 @@ public class WorkshopController {
         workshopService.add(wspho);
     }
     
+    @RequestMapping("addIntro")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addIntro(Wspho wspho) throws Exception {
+        workshopService.addIntroduce(wspho);
+    }
+    
     @RequestMapping("addfile")
     @ResponseStatus(HttpStatus.CREATED)
     public Object addfile(Workshop workshop, MultipartFile files) throws Exception {
@@ -99,10 +105,26 @@ public class WorkshopController {
         return workshopService.listSellerSite();
     }
     
+    @RequestMapping("listSellerSiteBanner")
+    public Object listSellerSiteBanner() {        
+        return workshopService.listSellerSiteBanner();
+    }
+    
+    @RequestMapping("listIntro")
+    public Object listIntro() {        
+        return workshopService.listIntroduce();
+    }
+    
     @RequestMapping("update")
     @ResponseStatus(HttpStatus.OK) // 기본 값이 OK 이다. 
     public void update(Workshop workshop) throws Exception {
         workshopService.update(workshop);
+    }
+    
+    @RequestMapping("updateIntro")
+    @ResponseStatus(HttpStatus.OK) // 기본 값이 OK 이다. 
+    public void updateIntro(Workshop workshop) throws Exception {
+        workshopService.updateIntroduce(workshop);
     }
     
     @RequestMapping("{no}")

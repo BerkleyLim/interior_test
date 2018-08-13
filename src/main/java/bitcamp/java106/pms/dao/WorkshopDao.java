@@ -12,7 +12,10 @@ public interface WorkshopDao {
     List<Workshop> selectList(int no);
     List<Workshop> selectListtwo(Map<String,Object> params);
     List<Workshop> selectListSellerSite();
+    List<Workshop> selectListIntroduce();
+    List<Workshop> selectListSellerSiteBanner();
     int update(Workshop workshop);
+    int updateIntroduce(Workshop workshop);
     Workshop selectOne(int no);
 
 }

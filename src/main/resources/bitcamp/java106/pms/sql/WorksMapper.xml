@@ -140,6 +140,14 @@
   <select id="selectRecent" resultMap="WorksMap">
     select wno from INTR_WORKS order by wno desc limit 1 
   </select>
+  
+  <select id="selectListSellerSite" resultType="Map" parameterType="map">
+    select wtitl, price, path
+    from INTR_WORKS wor
+    inner join INTR_WRKSHP wrk on wor.memno = wrk.memno
+    inner join INTR_WPHO wp on wor.wno = wp.wno
+  </select>
+
 </mapper>
 
 

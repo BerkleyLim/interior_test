@@ -2,15 +2,19 @@
 package bitcamp.java106.pms.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import bitcamp.java106.pms.dao.MainDao;
+import bitcamp.java106.pms.dao.TagDao;
 import bitcamp.java106.pms.dao.WorksDao;
 import bitcamp.java106.pms.dao.WorksOptionDao;
 import bitcamp.java106.pms.dao.WorksPhotoDao;
+import bitcamp.java106.pms.domain.Tag;
+import bitcamp.java106.pms.domain.Wkacp;
 import bitcamp.java106.pms.domain.Works;
 import bitcamp.java106.pms.domain.WorksOption;
 import bitcamp.java106.pms.domain.WorksPhoto;
@@ -23,19 +27,26 @@ public class WorksServiceImpl implements WorksService {
     MainDao mainDao;
     WorksOptionDao worksOptionDao;
     WorksPhotoDao worksPhotoDao;
+    TagDao tagDao;
+
     
     public WorksServiceImpl(WorksDao worksDao, MainDao mainDao,
-            WorksOptionDao worksOptionDao, WorksPhotoDao worksPhotoDao) {
+            WorksOptionDao worksOptionDao, WorksPhotoDao worksPhotoDao, TagDao tagDao) {
         this.worksDao = worksDao;
         this.mainDao = mainDao;
         this.worksOptionDao = worksOptionDao;
         this.worksPhotoDao = worksPhotoDao;
+        this.tagDao = tagDao;
     }
     
     @Override
     public List<Works> list() {
-        
         return worksDao.selectList();
+    }
+    
+    @Override
+    public List<Works> listSellerSite() {
+        return worksDao.selectListSellerSite();
     }
     
     @Override
@@ -44,13 +55,37 @@ public class WorksServiceImpl implements WorksService {
     }
     
     @Override
+    public Works adGet(int no) {
+        Works selectWorks = worksDao.selectOne(no);
+        
+        //옵션 설정
+        WorksOption selectOption = worksOptionDao.selectOne(no);
+        selectWorks.setOption(selectOption);
+        
+        int count = tagDao.countTags(no);
+        List<Tag> tagList = tagDao.selectMatchTags(no);
+        String[] arr = new String[count];
+        
+        for(int i = 0; i < count; i++) {
+            Tag tag = tagList.get(i);
+            arr[i] = tag.getTagName();
+        }
+        selectWorks.setWorksCategory(arr);
+        
+        return selectWorks;
+    }
+    
+    @Override
     public void add(Works works, ArrayList<WorksPhoto> worksPhotos) {
+        
         worksDao.insert(works);
+        WorksOption option = new WorksOption();
+        String tagResult = Arrays.toString(works.getWorksCategory());
+        String[] urlArr = (tagResult.substring(1, tagResult.length()-1)).split(", ");
         
         int worksNo =  worksDao.selectRecent().getWorksNumber();
-               
+        
         for(int i = 0; i < worksPhotos.size(); i++) {
-           
            WorksPhoto worksPhoto = worksPhotos.get(i);
            if(i == 1) {
                worksPhoto.setMainPhoto("Y");
@@ -59,17 +94,72 @@ public class WorksServiceImpl implements WorksService {
            worksPhotoDao.insert(worksPhoto);
         }
         
+        option.setAttributeValue(works.getOption().getAttributeValue());
+        option.setWorksNumber(worksNo);
         
-     
+        worksOptionDao.insert(option);
+        
+        for(int i = 0; i < urlArr.length; i++) {
+            Tag tag = new Tag();
+            String tagValue = urlArr[i];
+            tag.setTagName(tagValue);
+            
+            tagDao.insert(tag);
+            int tagNo = tagDao.getTag(tagValue).getHashTagNo();
+            
+            Tag match = new Tag();
+            match.setWorksMatchNo(worksNo);
+            match.setHashTagNo(tagNo);
+            System.out.println(match.getHashTagNo());
+            System.out.println(match.getWorksMatchNo());
+            System.out.println();
+            tagDao.matchInsert(match);
+        }
     }
     
     @Override
-    public int update(Works works) {
+    public int update(Works works, ArrayList<WorksPhoto> worksPhotos) {
+        int worksNo = works.getWorksNumber();
+        worksPhotoDao.delete(worksNo);
+        for(int i = 0; i < worksPhotos.size(); i++) {
+            WorksPhoto worksPhoto = worksPhotos.get(i);
+            worksPhoto.setWorksNumber(worksNo);
+            worksPhotoDao.insert(worksPhoto);
+        }
+        
+        WorksOption option = new WorksOption();
+        option.setAttributeValue(works.getOption().getAttributeValue());
+        option.setWorksNumber(worksNo);
+        worksOptionDao.update(option);
+        
+        String tagResult = Arrays.toString(works.getWorksCategory());
+        String[] urlArr = (tagResult.substring(1, tagResult.length()-1)).split(", ");
+        
+        tagDao.deleteRelation(worksNo);
+        
+        for(int i = 0; i < urlArr.length; i++) {
+            Tag tag = new Tag();
+            String tagValue = urlArr[i];
+            tag.setTagName(tagValue);
+            
+            tagDao.insert(tag);
+            int tagNo = tagDao.getTag(tagValue).getHashTagNo();
+            
+            Tag match = new Tag();
+            match.setWorksMatchNo(worksNo);
+            match.setHashTagNo(tagNo);
+            System.out.println(match.getHashTagNo());
+            System.out.println(match.getWorksMatchNo());
+            System.out.println();
+            tagDao.matchInsert(match);
+        }
        return worksDao.update(works);
     }
     
     @Override
     public int delete(int no) {
+        worksOptionDao.delete(no);
+        tagDao.deleteRelation(no);
         return worksDao.delete(no);
     }
 

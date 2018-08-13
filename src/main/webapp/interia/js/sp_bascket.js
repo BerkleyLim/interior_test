@@ -37,17 +37,44 @@ $.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
 							} else {
 								products[x].resultDelivery ="무료배송";
 							}
-							console.log(products[x]);
 							x++;
 						}
 					}
 					$("#bascket-list-detail" + workshopData[j].workshopNumber).html(templateFnProduct({product:products}))
 				}
 				
+				
+				
+				var orderData = new Array();
+				
+				// orderData에 저장
+				for (var i = 0; i < productData.length; i++) {
+				    if ($(document.body).is("#select-checkbox" + productData[i].worksNumber + ":checked")) {
+				        orderData[i].worksNumber = productData[i].worksNumber;
+				        orderData[i].studioName = productData[i].studioName;
+				        orderData[i].buyValue = $("#purchase-value" + productData[i].worksNumber).val();
+				        orderData[i].priceValue = $("#price-value" + productData[i].worksNumber).text();
+				        orderData[i].path = productData[i].path;
+				        orderData[i].worksTitle = productData[i].title;
+				        orderData[i].optionValue = productData[i].attributeValue;
+				        
+				        if ($("#delivery" + productData[i].worksNumber).text() == "무료배송") {
+				        	orderData[i].resultDelivery = "0"
+				        } else {
+				        	orderData[i].resultDelivery = "2500"
+				        }
+				        
+				        orderData[i].orderPrice = all-order-price1;
+				    }
+				}
+				
+				// 결재하기 버튼 클릭 시.
 				$("#submit-purchase").click(() => {
-					
-					
 					$.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
+						// 세션에 저장할 정보를 보낸다.
+						$.post(serverRoot + "/json/order/purchasedReady",orderData, () => {
+							location.href='sp_purchase.html';
+						}, "json");
 						location.href='sp_purchase.html';
 					}).fail(() => {
 						window.alert("로그인 하시기 바랍니다.");

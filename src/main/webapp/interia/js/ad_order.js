@@ -5,29 +5,12 @@ var adWorksEnrollBtn = $('.ad-works-enroll');
 var adWorksWrapperTemplateSrc = $('#ad-works-template').html();
 var adWorksWrapperTemplate = Handlebars.compile(adWorksWrapperTemplateSrc);
 
-/*button 클릭시 파일 첨부 */	
-$(function () {
-	$('#imgUpload1').click(function (e) {
-		e.preventDefault();
-		$('#fileupload1').click();
-	});
-});
-
-$(function () {
-	$('#imgUpload2').click(function (e) {
-		e.preventDefault();
-		$('#fileupload2').click();
-	});
-});
-
-
-
 $.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
 	//공방번호(사용자번호(PK))
 	userNo = data.no;
 	
 	/* list */
-	$.getJSON(serverRoot + "/json/works/adminList",{"no":userNo}, (data) => {
+	$.getJSON(serverRoot + "/json/order/adminList",{"no":userNo}, (data) => {
 		console.log(userNo);
 		console.log(data);
 		for (var item of data) {

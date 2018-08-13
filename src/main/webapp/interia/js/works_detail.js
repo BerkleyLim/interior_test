@@ -69,6 +69,7 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 		if(result.worksPhoto[index].mainPhoto == "y" 
 			|| result.worksPhoto[index].mainPhoto == "Y") {
 			// 메인 이미지 표시
+			mainPhoto = result.worksPhoto[index].path;
 			$("#main-image").attr("src","../../images/works/works_list/" + result.worksPhoto[index].path);
 		} else {
 			// 서브 이미지 표시
@@ -115,13 +116,27 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 		}); 
 	});
 	
+	
+	
+	var orderData = {
+		// orderData에 저장
+		worksNumber : result.worksNumber,
+		studioName : $("#fTitle").text,
+		buyValue : $("#seller-value").val(),
+		priceValue : $("#price-value").text(),
+		path : mainPhoto,
+		worksTitle : result.title,
+		optionValue : $("#fOptionValue").val(),
+		resultDelivery : $("#fDeliveryPrice").val(),
+		orderPrice : $("#All-Price").text()
+	};
+	
+
+	
 	// 구매하기 버튼 구현
 	$("#btn-purchased").click(() => {
 		$.getJSON(serverRoot + "/json/auth/loginUser", (data) => {
-			$.getJSON(serverRoot + "/json/order/purchaseReady", {
-				
-			}, () => {
-				
+			$.getJSON(serverRoot + "/json/order/purchaseReady", orderData, () => {
 				location.href='sp_purchase.html';
 			}, 'post')
 		}).fail(() => {
