@@ -12,6 +12,7 @@ public class Odnwk implements Serializable {
     private int oderStore; /* 수량 */
     private String purchEpilo; /* 구매후기 */
     private String revPhoto; /* 리뷰사진 */
+    private String worksOption;
     private Order order;
     private Works works;
     
@@ -19,14 +20,24 @@ public class Odnwk implements Serializable {
     
     @Override
     public String toString() {
-        return "Odnwk [no=" + no + ", oderNo=" + oderNo + ", WorksNo=" + WorksNo + ", oderStore=" + oderStore
-                + ", purchEpilo=" + purchEpilo + ", revPhoto=" + revPhoto + ", order=" + order + ", works=" + works
-                + ", rvpho=" + rvpho + "]";
+        return "Odnwk [no=" + no + ", oderNo=" + oderNo + ", WorksNo=" + WorksNo
+                + ", oderStore=" + oderStore + ", purchEpilo=" + purchEpilo
+                + ", revPhoto=" + revPhoto + ", worksOption=" + worksOption
+                + ", order=" + order + ", works=" + works + ", rvpho=" + rvpho
+                + "]";
     }
     
     public int getNo() {
         return no;
     }
+    public String getWorksOption() {
+        return worksOption;
+    }
+
+    public void setWorksOption(String worksOption) {
+        this.worksOption = worksOption;
+    }
+
     public void setNo(int no) {
         this.no = no;
     }

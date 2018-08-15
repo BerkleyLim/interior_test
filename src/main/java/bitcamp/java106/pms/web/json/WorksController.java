@@ -85,7 +85,7 @@ public class WorksController {
     
     @RequestMapping("delete")
     //@ResponseStatus(HttpStatus.OK) // 응답 상태 코드 값의 기본은 "200(OK)" 이다.
-    public void delete(@RequestParam("no") int no) throws Exception {
+    public void delete(@RequestParam("wno") int no) throws Exception {
         worksService.delete(no);
     }
     
@@ -106,7 +106,7 @@ public class WorksController {
         
         String filesDir = sc.getRealPath("/files");
         
-        
+        System.out.println(works.getWorkshopNumber());
         ArrayList<WorksPhoto> worksPhotos = new ArrayList<>();
         
         for (int i = 0; i < files.length; i++) {
@@ -155,10 +155,10 @@ public class WorksController {
     // 장바구니 담기
     @RequestMapping("add/buscket")
     public void addBuscket(@RequestParam("worksNumber") int worksNumber,
-            @RequestParam("optionNumber") int optionNumber,
+            @RequestParam("optionValue") String optionValue,
             HttpSession session) throws Exception {
         Member member = (Member)session.getAttribute("loginUser");
-        worksService.addBuscket(worksNumber, member.getNo(), optionNumber);
+        worksService.addBuscket(worksNumber, member.getNo(), optionValue);
     }
     
     // 장바구니 리스트 출력 1 - 공통 공방명 추출
@@ -176,6 +176,23 @@ public class WorksController {
 
         System.out.println(buscket);
         return buscket;
+    }
+    
+    // 선택시 제거
+    @RequestMapping("buscketDelete/{worksNumber}")
+    public void buscketDelete(@PathVariable("worksNumber") int worksNumber,
+            HttpSession session) {
+        Member member = (Member) session.getAttribute("loginUser");
+        
+        worksService.buscketDelete(member.getNo(), worksNumber);
+    }
+    
+    // 구매시 장바구니에 관련된 해당 회원 전체 제거
+    @RequestMapping("buscketAllDelete")
+    public void buscketAllDelete(HttpSession session) {
+        Member member = (Member) session.getAttribute("loginUser");
+        
+        worksService.buscketAllDelete(member.getNo());
     }
     
     //관리자 판매작품List 

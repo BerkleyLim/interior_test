@@ -13,6 +13,8 @@ public interface OdnwkService {
     List<Odnwk> listSellerSite();
     List<Odnwk> revList(int no);
     Odnwk get(int no);
+    List<Odnwk> revCount(int no);
+    List<Odnwk> revDetail(int wno, int startNo, int pageNo);
     List<Odnwk> revGet(int no);
     List<Odnwk> revGetList(int no);
     int add(Odnwk odnwk);

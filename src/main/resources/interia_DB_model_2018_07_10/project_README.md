@@ -38,7 +38,6 @@
 - 처리상태(교환/환불) - Processing Status (PRSTT)
 - 처리사유(교환/환불) - Processing Detail (PRDTL)
 
-
 <3> 작품TABLE - Works (WORKS)
 
 - PK _ 작품번호 - Work Number (WNO)

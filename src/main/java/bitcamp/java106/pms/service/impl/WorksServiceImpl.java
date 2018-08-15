@@ -132,6 +132,8 @@ public class WorksServiceImpl implements WorksService {
         option.setWorksNumber(worksNo);
         worksOptionDao.update(option);
         
+        System.out.println("serviceimpl:" + works.getWorkshopNumber());
+        
         String tagResult = Arrays.toString(works.getWorksCategory());
         String[] urlArr = (tagResult.substring(1, tagResult.length()-1)).split(", ");
         
@@ -158,6 +160,7 @@ public class WorksServiceImpl implements WorksService {
     
     @Override
     public int delete(int no) {
+        worksPhotoDao.delete(no);
         worksOptionDao.delete(no);
         tagDao.deleteRelation(no);
         return worksDao.delete(no);
@@ -202,11 +205,11 @@ public class WorksServiceImpl implements WorksService {
     
     // 장바구니 담기
     @Override
-    public int addBuscket(int worksNumber, int memberNumber, int optionNumber) {
+    public int addBuscket(int worksNumber, int memberNumber, String optionValue) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("worksNumber", worksNumber);
         params.put("memberNumber", memberNumber);
-        params.put("optionNumber", optionNumber);
+        params.put("optionValue", optionValue);
         return worksDao.insertBuscket(params);
     }
     
@@ -214,6 +217,21 @@ public class WorksServiceImpl implements WorksService {
     @Override
     public List<Object> getBuscketList(int buyerNumber) {
         return worksDao.selectBuscketList(buyerNumber);
+    }
+    
+    // 해당 회원 장바구니 전체제거(구매시)
+    @Override
+    public int buscketAllDelete(int buyerNumber) {
+        return worksDao.buscketAllRemove(buyerNumber);
+    }
+    
+    // 해당 회원 선택 제거
+    @Override
+    public int buscketDelete(int buyerNumber, int worksNumber) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("buyerNumber", buyerNumber);
+        params.put("worksNumber", worksNumber);
+        return worksDao.buscketRemove(params);
     }
     
     // 장바구니 리스트 - 해당 회원이 공방을 찾는 메서드

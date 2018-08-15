@@ -22,6 +22,7 @@ public interface OrderDao {
     
     Order adGet(int no);
 
-    Object adList(int no);
+    List<Object> adList(int no);
 
+    List<Integer> selectOrderNumberList();
 }

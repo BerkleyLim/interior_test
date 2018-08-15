@@ -23,7 +23,9 @@ h4 {
 
 /**** 사진 ****/
 .mp-select-pic {
+	position: relative;
 	border: #D5D5D5 dashed 1px;
+	border-radius: 3px;
 	width: 440px; height: 350px;
 	display: flex;
 	flex-direction: column;
@@ -31,14 +33,35 @@ h4 {
 	margin-bottom: 1.875em;
 	cursor: pointer;
 }
-.mp-select-pic > div {
+.mp-inner-icon {
 	text-align: center;
 	vertical-align: middle;
 	color: #ffc001;
 	font-weight: bold;
 }
-.mp-select-pic > div > i {
+.mp-inner-icon > i {
 	font-size: 4em;
+}
+#fileupload-post {
+	display: none;
+}
+.mp-postwrite-cover {
+	position: absolute;
+	background-color: rgba(0,0,0,0.3);
+    border-radius: 3px;
+	opacity: 0;
+	width: 100%; 
+	height: 100%;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity .5s ease; 
+}
+.mp-select-pic:hover .mp-postwrite-cover {
+	opacity: 1;
+} 
+.mp-postwrite-cover > .mp-inner-icon {
+    color: #fff;
 }
 
 
@@ -62,7 +85,7 @@ textarea::placeholder {
 }
 
 /**** 해시태그 ****/
-.mp-post-put {
+/* .mp-post-put {
 	width: 110px; height: 32px;
 	line-height: 32px;
 	border-radius: 5px;
@@ -78,7 +101,19 @@ textarea::placeholder {
 }
 .mp-post-put[contentEditable=true]:empty:focus:before {
     content: attr(data-text);
+} */
+
+.tag-editor {
+	border: solid #EAEAEA 1px !important;
+	border-radius: 5px;
+	font-size: 1em !important;
+	line-height: 27px !important;
+	font-family: inherit !important;
+	white-space: nowrap;
+	padding-top: .5em;
+	padding-bottom: .5em;
 }
+
 
 /**** 버튼 ****/
 .mp-post-regist {

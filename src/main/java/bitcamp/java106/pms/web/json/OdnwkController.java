@@ -35,8 +35,8 @@ public class OdnwkController {
     @ResponseStatus(HttpStatus.CREATED)
     public void add(Odnwk odnwk) throws Exception {
         odnwkService.add(odnwk);
+        
     }
-    
     @RequestMapping("delete")
     //@ResponseStatus(HttpStatus.OK) // 응답 상태 코드 값의 기본은 "200(OK)" 이다.
     public void delete(@RequestParam("no") int no,
@@ -47,6 +47,19 @@ public class OdnwkController {
     @RequestMapping("list")
     public Object list(int no) {        
         return odnwkService.list(no);
+    }
+    
+    @RequestMapping("revCount")
+    public Object revCount(int no) {        
+        return odnwkService.revCount(no);
+    }
+    
+    @RequestMapping("revDetail")
+    public Object revDetail(
+            @RequestParam("wno") int wno,
+            @RequestParam("startNo") int startNo,
+            @RequestParam("pageNo") int pageNo) {        
+        return odnwkService.revDetail(wno, startNo, pageNo);
     }
     
     @RequestMapping("listSellerSite")
