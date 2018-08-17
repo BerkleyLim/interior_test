@@ -40,8 +40,11 @@ public class WorksServiceImpl implements WorksService {
     }
     
     @Override
-    public List<Works> list() {
-        return worksDao.selectList();
+    public List<Works> list(int startNo, int pageNo) {
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("startNo", (startNo - 1) * pageNo);
+        params.put("pageNo", pageNo);
+        return worksDao.selectList(params);
     }
     
     @Override
@@ -88,7 +91,7 @@ public class WorksServiceImpl implements WorksService {
         for(int i = 0; i < worksPhotos.size(); i++) {
            WorksPhoto worksPhoto = worksPhotos.get(i);
            if(i == 1) {
-               worksPhoto.setMainPhoto("Y");
+               worksPhoto.setMainPhoto("y");
            }
            worksPhoto.setWorksNumber(worksNo);
            worksPhotoDao.insert(worksPhoto);
@@ -219,6 +222,12 @@ public class WorksServiceImpl implements WorksService {
         return worksDao.selectBuscketList(buyerNumber);
     }
     
+    // 장바구니 리스트 - 해당 회원이 공방을 찾는 메서드
+    @Override
+    public List<Object> viewBuscketWorkshopList(int buyerNumber) {
+        return worksDao.searchBuscketWorkshop(buyerNumber);
+    }
+    
     // 해당 회원 장바구니 전체제거(구매시)
     @Override
     public int buscketAllDelete(int buyerNumber) {
@@ -234,11 +243,6 @@ public class WorksServiceImpl implements WorksService {
         return worksDao.buscketRemove(params);
     }
     
-    // 장바구니 리스트 - 해당 회원이 공방을 찾는 메서드
-    @Override
-    public List<Object> viewBuscketWorkshopList(int buyerNumber) {
-        return worksDao.searchBuscketWorkshop(buyerNumber);
-    }
     
     @Override
     public List<Works> adminList(int no) {
@@ -249,6 +253,7 @@ public class WorksServiceImpl implements WorksService {
     public Object getCurrentState(int no) {
         return worksDao.getCurrentState(no);
     }
+    
     
 }
 

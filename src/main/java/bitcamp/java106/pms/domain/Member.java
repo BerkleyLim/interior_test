@@ -31,7 +31,6 @@ public class Member implements Serializable {
     public void setBannerPhoto(String bannerPhoto) {
         this.bannerPhoto = bannerPhoto;
     }
-    
     public int getNo() {
         return no;
     }

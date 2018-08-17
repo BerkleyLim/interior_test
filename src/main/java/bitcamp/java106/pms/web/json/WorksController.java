@@ -41,7 +41,7 @@ public class WorksController {
     @ResponseStatus(HttpStatus.CREATED)
     public void add(Works works, MultipartFile[] files) throws Exception {
 
-        String filesDir = sc.getRealPath("/files");
+        String filesDir = sc.getRealPath("/files/works");
         
         
         ArrayList<WorksPhoto> worksPhotos = new ArrayList<>();
@@ -91,8 +91,10 @@ public class WorksController {
     
     // 여기는 제품 리스틀 간단히 보여주는걸 의미
     @RequestMapping("list")
-    public Object list() {       
-        return worksService.list();
+    public Object list(
+            @RequestParam("startNo") int startNo,
+            @RequestParam("pageNo") int pageNo) {       
+        return worksService.list(startNo, pageNo);
     }
     
     @RequestMapping("listSellerSite")
@@ -104,7 +106,7 @@ public class WorksController {
     @ResponseStatus(HttpStatus.OK) // 기본 값이 OK 이다. 
     public void update(Works works, MultipartFile[] files) throws Exception {
         
-        String filesDir = sc.getRealPath("/files");
+        String filesDir = sc.getRealPath("/files/works");
         
         System.out.println(works.getWorkshopNumber());
         ArrayList<WorksPhoto> worksPhotos = new ArrayList<>();
@@ -212,7 +214,7 @@ public class WorksController {
         
         HashMap<String,Object> jsonData = new HashMap<>();
         
-        String filesDir = sc.getRealPath("/files");
+        String filesDir = sc.getRealPath("/files/works");
         
         String filename = UUID.randomUUID().toString();
         jsonData.put("filename", filename);

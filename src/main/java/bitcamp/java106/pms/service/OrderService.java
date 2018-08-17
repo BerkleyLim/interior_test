@@ -2,9 +2,6 @@ package bitcamp.java106.pms.service;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import bitcamp.java106.pms.domain.Odnwk;
 import bitcamp.java106.pms.domain.Order;
 
 public interface OrderService {
@@ -16,8 +13,21 @@ public interface OrderService {
     
     //관리자 전용
     int adUpdate(Order order);
-    Order adGet(int no);
+    Object adGet(int no);
     List<Object> adList(int no);
+    List<Object> returnList(int no);
+    List<Object> cancelList(int no);
+    Object getReturnState(int no);
+    Object getCancelState(int no);
+    
+    int finClaim(int[] chkArr);
+    int chngExchange(int[] chkArr);
+    int chngReturn(int[] chkArr);
+    List<Object> rejSelectList(int no, int userNo);
+    
     void add(Order order); // 주문
     List<Integer> AllOrderNumber();
+    Object updateClaimReject(int[] arr, String qs);
+    int finCancel(int[] chkArr);
+    int updateCancelReject(String worksOrderNo, Order order);
 }

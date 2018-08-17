@@ -10,7 +10,7 @@ import bitcamp.java106.pms.domain.WorksPhoto;
 public interface WorksService {
     // 서비스 컴포넌트에서 메서드명을 지을 때는 
     // 업무 용어를 사용하라!
-    List<Works> list();
+    List<Works> list(int startNo, int pageNo);
     List<Works> listSellerSite();
     Works get(int no);
     void add(Works works, ArrayList<WorksPhoto> worksPhotos);
@@ -20,7 +20,7 @@ public interface WorksService {
     Object getWorksPhotoOption(int worksNumber); // 작품, 옵션, 사진 가져오는 메소드
     List<Works> adminList(int no);
     Object getCurrentState(int no); 
-    int addBuscket(int worksNumber, int no, String optionValue);
+    int addBuscket(int worksNumber, int no, String optionValue);; // 여기는 장바구니 담는 용도
     List<Object> getBuscketList(int buyerNumber); // 여기는 해당 공방 안에 있는 각 장바구니의 제품을 출력
     List<Object> viewBuscketWorkshopList(int buyerNumber); // 장바구니안에 있는 공방명 출력
     Works adGet(int no);

@@ -84,12 +84,23 @@ public class MemberServiceImpl implements MemberService {
     public int memberNumber(String id) {
         return memberDao.selectOneNumber(id);
     }
-    
+
     @Override
     public int updateBphoto(Member member) {
         // TODO Auto-generated method stub
         return memberDao.updateBphoto(member);
     }
+
+    @Override
+    public Member memberInfo(int no) {
+        return memberDao.selectMemInfo(no);
+    }
+
+    @Override
+    public void updatePphoto(Member member) {
+        memberDao.updatePphoto(member);
+    }
+
 }
 
 

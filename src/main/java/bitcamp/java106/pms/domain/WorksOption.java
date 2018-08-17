@@ -16,11 +16,9 @@ public class WorksOption implements Serializable {
         return "WorksOption [optionNumber=" + optionNumber + ", worksNumber="
                 + worksNumber + ", attributeValue=" + attributeValue + "]";
     }
-
     public int getWorksNumber() {
         return worksNumber;
     }
-
     public void setWorksNumber(int worksNumber) {
         this.worksNumber = worksNumber;
     }
@@ -40,6 +38,6 @@ public class WorksOption implements Serializable {
     public void setAttributeValue(String attributeValue) {
         this.attributeValue = attributeValue;
     }
-    
+
     
 }

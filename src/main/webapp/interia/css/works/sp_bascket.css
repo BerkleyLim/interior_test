@@ -133,8 +133,8 @@ body {
     height: 100px;
 }
 
-.sp-sb-info-product{
-    margin-top: 1.3em;
+.sp-sb-info-name, .sp-sb-info-product{
+    margin-top: 0.5em;
 }
 
 .sp-sb-info-option, .sp-sb-info-delivery {
@@ -154,6 +154,10 @@ body {
 
 .sp-sb-qty-wrap input {
     width: 30px;
+}
+
+.sp-sb-info-name p{
+    font-size: 0.8rem;
 }
 
 .sp-sb-info-product p {

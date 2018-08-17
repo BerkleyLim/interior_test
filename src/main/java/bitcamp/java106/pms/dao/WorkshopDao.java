@@ -33,5 +33,9 @@ public interface WorkshopDao {
     int update(Workshop workshop);
     int updateIntroduce(Workshop workshop);
     Workshop selectOne(int no);
+    void updTwit(Workshop workshop);
+    void updFacbook(Workshop workshop);
+    void updInsta(Workshop workshop);
+    Object getInfo(int memno);
 
 }
