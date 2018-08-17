@@ -60,7 +60,7 @@ function loadLoginUser() {
 			location.href = serverRoot + "/interia/html/mypage/mp_post.html";
 		});
 		
-/*		// 마이페이지 드롭바 글쓰기 기능
+		/*// 마이페이지 드롭바 글쓰기 기능
 		$("#write").click(e => {
 			e.preventDefault();
 		});

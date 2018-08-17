@@ -43,7 +43,6 @@ public class WorksController {
 
         String filesDir = sc.getRealPath("/files/works");
         
-        
         ArrayList<WorksPhoto> worksPhotos = new ArrayList<>();
         
         for (int i = 0; i < files.length; i++) {
