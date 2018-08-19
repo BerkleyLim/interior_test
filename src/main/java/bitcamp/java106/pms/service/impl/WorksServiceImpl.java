@@ -48,8 +48,8 @@ public class WorksServiceImpl implements WorksService {
     }
     
     @Override
-    public List<Works> listSellerSite() {
-        return worksDao.selectListSellerSite();
+    public List<Works> listSellerSite(int no) {
+        return worksDao.selectListSellerSite(no);
     }
     
     @Override
@@ -91,7 +91,7 @@ public class WorksServiceImpl implements WorksService {
         for(int i = 0; i < worksPhotos.size(); i++) {
            WorksPhoto worksPhoto = worksPhotos.get(i);
            if(i == 1) {
-               worksPhoto.setMainPhoto("y");
+               worksPhoto.setMainPhoto("Y");
            }
            worksPhoto.setWorksNumber(worksNo);
            worksPhotoDao.insert(worksPhoto);

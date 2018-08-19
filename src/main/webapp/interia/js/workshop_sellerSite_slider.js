@@ -1,4 +1,6 @@
-$.getJSON(serverRoot + "/json/workshop/listSellerSiteBanner", (data) => {
+var no = location.href.split("=")[1];
+
+$.getJSON(serverRoot + "/json/workshop/listSellerSiteBanner",{"no":no}, (data) => {
 	console.log(data);
 	for (var i = 0; i < data.length; i++) {
 		$("<li>" +

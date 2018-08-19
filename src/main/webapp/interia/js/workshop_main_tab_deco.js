@@ -7,7 +7,7 @@ $.getJSON("../../../json/workshop/listdeco",{"no":7}, (data) => {
                                     "<img src='../../../files/workshop/" + data[i].path + "' style='width: 100%;'>" +
                                 "</div>" +
                                 "<div class='fc_category_storeList00_2_circle'>" +
-                                    "<a href='#'><img src='../../../files/workshop/" + data[i].lpath + "'></a>" +
+                                    "<a href='./workshop_sellerSite.html?no="+ data[i].wkmem +"'><img src='../../../files/workshop/" + data[i].lpath + "'></a>" +
                                 "</div>" +
                                 "<div class='fc_category_storeList00_2_title'>" +
                                     "<h1>" + data[i].wsnm + "</h1>" +
@@ -15,7 +15,7 @@ $.getJSON("../../../json/workshop/listdeco",{"no":7}, (data) => {
                                 "</div>" +
                                 "<div class='fc_category_storeList00_2_btn'>" +
                                     "<div class='fc_category_storeList00_2_btn02'>" +
-                                        "<a href='./workshop_sellerSite.html'>방문하기</a>" +
+                                        "<a href='./workshop_sellerSite.html?no="+ data[i].wkmem +"'>방문하기</a>" +
                                     "</div>" +
                                 "</div>" +
                             "</div>" +
@@ -45,7 +45,7 @@ $.getJSON("../../../json/workshop/listdeco",{"no":7}, (data) => {
                                     "<img src='../../../files/workshop/" + data[i].path + "' style='width: 100%;'>" +
                                 "</div>" +
                                 "<div class='fc_category_storeList00_2_circle'>" +
-                                    "<a href='#'><img src='../../../files/workshop/" + data[i].lpath + "'></a>" +
+                                    "<a href='./workshop_sellerSite.html?no="+ data[i].wkmem +"'><img src='../../../files/workshop/" + data[i].lpath + "'></a>" +
                                 "</div>" +
                                 "<div class='fc_category_storeList00_2_title'>" +
                                     "<h1>" + data[i].wsnm + "</h1>" +
@@ -53,7 +53,7 @@ $.getJSON("../../../json/workshop/listdeco",{"no":7}, (data) => {
                                 "</div>" +
                                 "<div class='fc_category_storeList00_2_btn'>" +
                                     "<div class='fc_category_storeList00_2_btn02'>" +
-                                        "<a href='./workshop_sellerSite.html'>방문하기</a>" +
+                                        "<a href='./workshop_sellerSite.html?no="+ data[i].wkmem +"'>방문하기</a>" +
                                     "</div>" +
                                 "</div>" +
                             "</div>" +

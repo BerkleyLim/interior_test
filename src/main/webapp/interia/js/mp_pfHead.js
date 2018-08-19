@@ -1,11 +1,11 @@
-$.get("/interior/interia/html/mp_pfHead.html", (data) => {
+$.get("/interior_test/interia/html/mp_pfHead.html", (data) => {
     $(".mp-banner").html(data);
     $(document.body).trigger('loadedPost')
 });
 
 
 /* scroller_underBar */
-$.get("/interior/interia/html/mp_underBar.html", (data) => {
+$.get("/interior_test/interia/html/mp_underBar.html", (data) => {
     $("#mp_underBar").html(data);
 });
 

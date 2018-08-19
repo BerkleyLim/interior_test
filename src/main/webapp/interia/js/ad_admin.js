@@ -15,9 +15,9 @@ $(document).ready(function(){
 $(document).ready(function(){
 	$('.modal').on('hidden.bs.modal', function (e) { 
 		$(this).find('form')[0].reset();
-		if ( $("#tname") > 0 ) {
-			$('#tname').tagEditor('destroy');
-		}
+		
+		$('#tname').tagEditor('destroy');
+		
 		if( $('#ad-claimRejectForm') > 0) {
 			var template = $('#ad-claimRejectForm');
 			var children = $('#ad-claimRejectForm').children();

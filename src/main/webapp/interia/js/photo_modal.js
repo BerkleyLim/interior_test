@@ -5,8 +5,15 @@ var bno = 0;
 
 function mkmodal(no) {
 	bno = no;
+	
 	$.getJSON("../../../json/board/"+no, (data) => {
 
+	var tsp = data.createDate;
+    var acDate = new Date(tsp);
+    var year = acDate.getFullYear();
+    var month = acDate.getMonth() + 1;
+    var date = acDate.getDate();
+		
 	$('<div class="modal fade multi-step" id="myModal" role="dialog">'+
 		'<div class="photo-detail modal-dialog">'+
 			'<div class="modal-body photo-modal-body step-1" data-step="1">'+
@@ -40,7 +47,7 @@ function mkmodal(no) {
 						'<span>좋아요</span><span>'+ data.count +'</span><span>개</span>'+
 					'</div>'+
 					'<div class="photo-box-date">'+
-						'<span>'+ data.createDate +'</span>'+
+						'<span>'+ year +'년'+ month +'월 '+ date +'일'+'</span>'+
 					'</div>'+
 					'<div class="photo-box-write">'+
 						'<form class="photo-write-form" id="photo-sns-comment-form" action="" method="">'+
@@ -238,19 +245,18 @@ function mkmodal(no) {
 	$.getScript('../../js/link_add_modal.js'); 
 	$("#myModal").modal();
 		
-	});
-	
-	//이미지 가로세로 정렬
+	}).done(//이미지 가로세로 정렬
 	window.onload = function() {
+		console.log("으잉?");
 		var divs = document.querySelectorAll('.photo-header-profile');
 		for (var i = 0; i < divs.length; ++i) {
 			var div = divs[i],
 				divAspect = div.offsetHeight / div.offsetWidth;
-			
+			console.log("divAspect: " + divAspect);
 			var img = div.querySelector('.profile-img-tag'),
 				imgAspect = img.height / img.width;
-			
-			if (imgAspect <= divAspect) {
+			console.log("imgAspect: " + imgAspect);
+			if (imgAspect <= 1) {
 				// 이미지가 div보다 납작한 경우 세로를 div에 맞추고 가로는 잘라낸다
 				var imgWidthActual = div.offsetHeight / imgAspect,
 					imgWidthToBe = div.offsetHeight / divAspect,
@@ -263,7 +269,9 @@ function mkmodal(no) {
 			}
 		}
 		
-	}
+	});
+	
+	
 	
 };
 

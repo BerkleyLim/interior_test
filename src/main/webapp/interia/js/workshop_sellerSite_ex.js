@@ -1,4 +1,7 @@
-$.getJSON(serverRoot + "/json/wsav/sellerSiteList", (data) => {
+var no = location.href.split("=")[1];
+
+$.getJSON(serverRoot + "/json/wsav/sellerSiteList",{"no":no}, (data) => {
+	console.log("--------------");
 	console.log(data);
 	$("<a href='./sellerSite_ex.html'>" +
 			"<img src='../../../files/workshop/" + data[0].path + "'>" +

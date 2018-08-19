@@ -149,7 +149,14 @@ dl,ul,ol,menu,li {list-style:none}
 .workshop_sellerSite_content_visual {
     width: 100%;
     height: 300px;
+    overflow: hidden;
 }
+.workshop_sellerSite_content_visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .workshop_sellerSite_content_subContent {
     width: 880px;
     height: 2650px;
@@ -332,9 +339,12 @@ dl,ul,ol,menu,li {list-style:none}
     height: 660px;
     float: left;
     margin-top: 1em;
+    padding: 0 1.5em;
 }
 .sellerSite_product_img_00 {
-    display: flex;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(5,1fr);
 }
 .sellerSite_review {
     width: 440px;
