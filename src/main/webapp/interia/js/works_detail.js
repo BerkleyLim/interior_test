@@ -39,7 +39,7 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 	
 	// 7) 구매 갯수 증가 이벤트
 	$("#plus-value").click(() => {
-		if (sellerValue == maxCapacity) {
+		if (buyValue == maxCapacity) {
 			window.alert("더이상의 재고 수량이 존재하지 않습니다.");
 		} else {
 			$("#buy-Value").text(++buyValue);
@@ -51,7 +51,7 @@ $.getJSON(serverRoot + "/json/works/" + no, (result) => {
 	
 	// 8) 구매 갯수 감소 이벤트
 	$("#minus-value").click(() => {
-		if (sellerValue == 1) {
+		if (buyValue == 1) {
 			window.alert("최소 1개 이상을 지정해야합니다.");
 		} else {
 			$("#buy-value").text(--buyValue);
