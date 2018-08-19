@@ -209,6 +209,7 @@
 			var uno = data.no;
 			$.getJSON("../../../json/odnwk/revList",{"no": uno}, (data) => {
 				for (var i = 0; i < data.length; i++) {
+					console.log("데이터 : " + data);
 					if (data[i].qctt != null || data[i].qctt != "") {
 						$(`<form>
 							<div class="ib-mp-purchasebox">

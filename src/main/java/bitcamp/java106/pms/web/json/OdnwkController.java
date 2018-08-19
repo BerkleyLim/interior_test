@@ -73,7 +73,7 @@ public class OdnwkController {
     }
     
     @RequestMapping("revGet")
-    public Object revGet(int no) {        
+    public Object revGet(int no) {
         return odnwkService.revGet(no);
     }
     
